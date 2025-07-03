@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    height: 100vh;
+    position: relative;
+    background-color: #282baa;
+}
+
+.auth-container {
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgb(75, 70, 70);
+    background-color: #fff;
+}
+
+h2{
+     font-family: "Lato", sans-serif;
+}
+input{
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border-color: rgb(58, 57, 131);
+    
+}
+button {
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    color: #faf2dd;
+    background-color: #524969;
+    padding: 4px;
+    
+}
+button:hover {
+    color: #faf2dd;
+    background-color: #867e99;
+}
