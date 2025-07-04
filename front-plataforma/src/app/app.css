@@ -1,0 +1,49 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #111827;
+  color: rgb(48, 70, 192);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.footer .social img {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  transition: transform 0.2s ease;
+}
+
+.footer .social img:hover {
+  transform: scale(1.2);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+footer {
+  margin-top: auto;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer svg {
+  width: 24px;
+  height: 24px;
+  max-width: 100%;
+}
+

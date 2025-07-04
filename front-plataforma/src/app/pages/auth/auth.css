@@ -13,8 +13,8 @@ body {
     max-width: 400px;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 14px rgb(75, 70, 70);
-    background-color: #fff;
+    box-shadow: 0 4px 14px rgb(80, 74, 74);
+    background-color: #f5efef;
 }
 
 h2{
