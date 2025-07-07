@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import e from 'express';
 
 interface Usuario {
   name: string;
@@ -12,20 +11,19 @@ interface Usuario {
 
 @Component({
   selector: 'app-auth',
+  standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './auth.html',
-  styleUrl: './auth.css'
+  styleUrls: ['./auth.css']  // corrigido (antes estava "styleUrl")
 })
-export class Auth implements OnInit{
+export class Auth implements OnInit {
 
   form!: FormGroup;
-  isLoginMode= true;
+  isLoginMode = true;
 
   constructor(
-    
     private formBuilder: FormBuilder,
     private router: Router
-
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +37,7 @@ export class Auth implements OnInit{
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
+
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.setupForm();
@@ -50,42 +49,62 @@ export class Auth implements OnInit{
   }
 
   salveUser(lista: Usuario[]): void {
-    localStorage.setItem('usuarios', JSON.stringify(lista))
+    localStorage.setItem('usuarios', JSON.stringify(lista));
   }
 
   onSubmit(): void {
-    console.log('Form submit envied');
-    if (this.form.invalid)return;
+    if (this.form.invalid) {
       console.log('Form is invalid', this.form.errors);
-
-      const { name, email, password } = this.form.value;
-      const usuarios = this.getUser();
-
-      if (this.isLoginMode) {
-        const usuario = usuarios.find(u => u.email === email && u.password === password);
-        if (usuario) {
-          console.log('Login successful', usuario);
-          localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-          this.router.navigate(['/home']);
-        } else {
-          alert('Usuário ou senha inválidos');
-        }
-
-      }else {
-        const usuarioExistente = usuarios.some(u => u.email === email);
-        if (usuarioExistente) {
-          alert('Usuário já cadastrado');
-          return;
-        }
-        const novoUsuario: Usuario = { name, email, password };
-        usuarios.push(novoUsuario);
-        this.salveUser(usuarios);
-        alert('Usuário cadastrado com sucesso!');
-        this.toggleMode();
-        this.form.reset();
-       
-      }
-      
-   
+      return;
     }
+
+    const { name, email, password } = this.form.value;
+    const usuarios = this.getUser();
+
+    if (this.isLoginMode) {
+      const usuario = usuarios.find(u => u.email === email && u.password === password);
+      if (usuario) {
+        console.log('Login successful', usuario);
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+        this.router.navigate(['/dashboard']);
+      } else {
+        alert('Usuário ou senha inválidos');
+      }
+    } else {
+      const usuarioExistente = usuarios.some(u => u.email === email);
+      if (usuarioExistente) {
+        alert('Usuário já cadastrado');
+        return;
+      }
+
+      const novoUsuario: Usuario = { name, email, password };
+      usuarios.push(novoUsuario);
+      this.salveUser(usuarios);
+      alert('Usuário cadastrado com sucesso!');
+      this.toggleMode();
+      this.form.reset();
+    }
+  }
+
+  
+  esqueciSenha(): void {
+    const email = prompt('Digite seu e-mail para recuperar a senha:');
+    if (!email) return;
+
+    const usuarios = this.getUser();
+    const usuario = usuarios.find(u => u.email === email);
+
+    if (usuario) {
+      alert(`Sua senha é: ${usuario.password}`);
+    } else {
+      alert('E-mail não encontrado');
+    }
+
+    if (usuario) {
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+    this.router.navigate(['/dashboard']);
 }
+
+  }
+}
+

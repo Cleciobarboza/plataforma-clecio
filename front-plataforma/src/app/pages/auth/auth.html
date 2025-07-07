@@ -1,30 +1,40 @@
-<div class="auth-container">
-    <h2>{{ isLoginMode ? 'Login' : 'Cadastro' }}</h2>
+<div class="w-full max-w-md space-y-6">
+  <h2 class="text-2xl font-bold text-center">
+    {{ isLoginMode ? 'Acesse sua conta' : 'Crie sua conta' }}
+  </h2>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div *ngIf="!isLoginMode">
-            <label for="name">Nome</label>
-            <input id="name" formControlName="name" />
-        </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div *ngIf="!isLoginMode">
+      <label for="name">Nome</label>
+      <input id="name" formControlName="name" placeholder="Seu nome"
+        class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+    </div>
 
-        <label for="email">E-mail</label>
-        <input id="email" type="email" formControlName="email" />
+    <label for="email">E-mail</label>
+    <input id="email" type="email" formControlName="email" placeholder="Seu e-mail"
+      class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
 
-        <label for="password">Senha</label>
-        <input
-            id="password"
-            type="password"
-            formControlName="password"
-            [placeholder]="isLoginMode ? '' : 'Informe pelo menos 8 dígitos'"
-        />
+    <label for="password">Senha</label>
+    <input id="password" type="password" formControlName="password"
+      [placeholder]="isLoginMode ? 'Sua senha' : 'Informe pelo menos 8 dígitos'"
+      class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
 
-        <button type="submit">{{ isLoginMode ? 'Entrar' : 'Cadastrar' }}</button>
-    </form>
+    <div class="text-right">
+      <a href="#" class="text-sm text-purple-400 hover:underline">Esqueci minha senha</a>
+    </div>
 
-    <p>
-        {{ isLoginMode ? 'Não tem conta?' : 'Já tem conta?' }}
-        <button type="button" (click)="toggleMode()">
-            {{ isLoginMode ? 'Criar conta' : 'Fazer Login' }}
-        </button>
-    </p>
+    <button type="submit"
+      class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-md font-semibold">
+      {{ isLoginMode ? 'Entrar' : 'Cadastrar' }}
+    </button>
+  </form>
+
+  <div class="text-center text-sm">
+    {{ isLoginMode ? 'Não tem uma conta?' : 'Já tem uma conta?' }}
+    <button (click)="toggleMode()" class="text-purple-400 hover:underline ml-1">
+      {{ isLoginMode ? 'Criar conta grátis' : 'Fazer login' }}
+    </button>
+  </div>
 </div>
+
+
