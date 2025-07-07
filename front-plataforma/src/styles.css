@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 *{
       font-family: "Roboto", sans-serif;
-      color: #140307;
-      background-color: #e7edf0;
+      color: #1a191a;
+      background-color: #eaebf1;
 }
 
 @tailwind base;
