@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // ROTA: Landing Page (com layout principal)
+  // 🏠 ROTA: Landing Page (Home)
   {
     path: '',
     loadComponent: () =>
@@ -11,7 +11,16 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import('./pages/home/home').then(m => m.Home)
-      },
+      }
+    ]
+  },
+
+ // ROTA: Dashboard (com layout exclusivo)
+  {
+    path: '',
+    loadComponent: () =>
+      import('./layouts/dashboard-layout/dashboard-layout').then(m => m.DashboardLayout),
+    children: [
       {
         path: 'dashboard',
         loadComponent: () =>

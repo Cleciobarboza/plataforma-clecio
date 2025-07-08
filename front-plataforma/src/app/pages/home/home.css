@@ -1,25 +1,76 @@
-.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+/* Seção de boas-vindas */
+.banner-hero {
+  padding: 5rem 1rem;
+  background: linear-gradient(to top right, #6b21a8, #4338ca); /* roxo para azul */
+  color: white;
+  text-align: center;
 }
-h1{
-   font-family: "DynaPuff", system-ui;
+
+.banner-hero h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 25rem;
 }
-p{
+
+.banner-hero p {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.banner-hero a {
+  background-color: white;
+  color: #6b21a8;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.banner-hero a:hover {
+  background-color: #f3f4f6;
+}
+
+/* Título "Nossos Cursos" */
+h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 3rem 0 2rem;
+  text-align: center;
+  
+}
+
+/* Cartões de cursos */
+.course-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(47, 63, 87, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.course-card:hover {
+  transform: scale(1.05);
+}
+
+.course-card img {
+  width: 100%;
+  height: 4rem;
+  object-fit: cover;
+}
+
+.course-card .content {
+  padding: 6rem;
+}
+
+.course-card .content h3 {
+  font-size: 1.1rem;
   font-weight: 700;
+  color: #e2e7ee; /* text-gray-800 */
+  margin-bottom: 0.5rem;
 }
-.social-media {
-  display: flex;
-  gap: 16px;
-  margin: 32px 0;
-  font-size: 32px;
-}
-.social-media a {
-  color: inherit;
-  transition: transform 0.3s;
-}
-.social-media a:hover {
-  transform: scale(1.1);
+
+.course-card .content p {
+  font-size: 0.75rem;
+  color: #d2d5db; /* text-gray-700 */
 }

@@ -1,5 +1,5 @@
 footer {
-  background-color: #1e3a8a; /* bg-blue-950 */
+  background-color: #041441; /* bg-blue-950 */
   color: white;
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -66,3 +66,24 @@ footer .course-card p {
   color: #4b5563; /* text-gray-700 */
   line-height: 1.25;
 }
+
+@media (min-width: 7768px) {
+  footer .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  footer .grid {
+    grid-template-columns: repeat(6, 3fr);
+  }
+}
+
+footer .icons,
+footer .apps {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
