@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // ROTA: Landing Page (Home)
+  // ROTA: Landing Page (com layout principal)
   {
     path: '',
     loadComponent: () =>
