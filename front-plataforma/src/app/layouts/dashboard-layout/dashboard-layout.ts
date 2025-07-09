@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DashboardHeader } from '../../dashboard/dashboard-header/dashboard-header';
+import { DashboardHeader } from '../../shared/components/dashboard-header/dashboard-header';
+
 
 @Component({
   selector: 'app-dashboard-layout',

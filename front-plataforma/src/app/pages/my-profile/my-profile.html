@@ -1,0 +1,31 @@
+<header class="bg-white shadow p-4 flex justify-between items-center">
+  
+    <span class="text-sm font-medium text-gray-700">
+      {{ usuario?.name }}
+    </span>
+  </header>
+
+  <div class="max-w-2xl mx-auto mt-6 p-6 bg-white shadow rounded">
+  <h2 class="text-xl font-bold mb-4">Editar Perfil</h2>
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="grid gap-4">
+    <input formControlName="name" placeholder="Usuário" class="p-2 border rounded" />
+    <input formControlName="email" type="email" placeholder="Email" class="p-2 border rounded" />
+    <input formControlName="password" type="password" placeholder="Senha" class="p-2 border rounded" />
+
+    <input formControlName="full_name" placeholder="Nome completo" class="p-2 border rounded" />
+    <input formControlName="birthDate" type="date" class="p-2 border rounded" />
+    <input formControlName="gender" placeholder="Gênero" class="p-2 border rounded" />
+    <input formControlName="profession" placeholder="Profissão" class="p-2 border rounded" />
+    <input formControlName="education" placeholder="Escolaridade" class="p-2 border rounded" />
+    <input formControlName="phone" placeholder="Telefone" class="p-2 border rounded" />
+    <input formControlName="country" placeholder="País" class="p-2 border rounded" />
+    <input formControlName="state" placeholder="Estado" class="p-2 border rounded" />
+    <input formControlName="city" placeholder="Cidade" class="p-2 border rounded" />
+    <textarea formControlName="description" placeholder="Descrição" rows="3" class="p-2 border rounded"></textarea>
+
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+      Salvar
+    </button>
+  </form>
+</div>
+
