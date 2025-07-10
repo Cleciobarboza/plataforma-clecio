@@ -15,9 +15,27 @@ export class DashboardHeader implements OnInit {
 
   constructor(private router: Router, private eRef: ElementRef) {}
 
+  irParaHome(): void {
+   this.menuAberto = false; // vai para ambiente do al
+   this.router.navigate(['/dashboard']);
+  }
+
+
+  irParaPec(): void {
+   this.menuAberto = false; // vai para ambiente do al
+   this.router.navigate(['/my-perfil']);
+  }
+
   irParaPerfil(): void {
    this.menuAberto = false; // fecha o menu
    this.router.navigate(['/my-profile']);
+  }
+
+
+
+  irFora(): void {
+   this.menuAberto = false; //volta para inicio
+   this.router.navigate(['/']);
   }
 
 

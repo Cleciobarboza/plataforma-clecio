@@ -8,7 +8,7 @@ import { DashboardHeader } from '../../shared/components/dashboard-header/dashbo
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule,FooterComponent,DashboardHeader],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule,FooterComponent],
   templateUrl: './my-profile.html',
   styleUrls: ['./my-profile.css']
 })
