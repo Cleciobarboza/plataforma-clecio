@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FooterComponent } from '../../shared/components/footer/footer';
+import { DashboardHeader } from '../../shared/components/dashboard-header/dashboard-header';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule,FooterComponent,DashboardHeader],
   templateUrl: './my-profile.html',
   styleUrls: ['./my-profile.css']
 })

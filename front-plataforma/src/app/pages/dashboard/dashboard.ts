@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FooterComponent } from '../../shared/components/footer/footer';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [FooterComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

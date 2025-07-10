@@ -1,23 +1,26 @@
-<mat-toolbar color="primary" class="flex justify-between items-center px-6 py-3">
-  
-  <!-- Logo + Título -->
-  <div class="flex items-center gap-3">
-    <img src="assets/logo/upskill.png" alt="Logo Upskill-Dev EAD" class="h-8 w-auto">
-    <span class="text-white text-lg font-bold">Upskill-Dev EAD</span>
-  </div>
+<header class="bg-[#050824] px-4 py-2 shadow">
+  <div class="container mx-auto flex justify-between items-center">
+    
+    <!-- Esquerda: Logo + Nome -->
+    <div class="flex items-center gap-2">
+      <img src="assets/logo/upskill.png" alt="Logo" class="h-8 w-auto">
+      <span class="text-white font-semibold text-lg">Upskill-Dev EAD</span>
+    </div>
 
-  <!-- Botões -->
-  <div class="flex gap-4">
-    <a href="http://localhost:4200/login" target="_blank"
-       class="text-white border border-white px-4 py-2 rounded hover:bg-white hover:text-indigo-600 transition">
-      Entrar
-    </a>
-    <button class="bg-white text-indigo-700 px-4 py-2 rounded hover:bg-gray-100 font-semibold transition">
-      Assinar
-    </button>
-  </div>
+    <!-- Direita: Botões -->
+    <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-1 shadow">
+      <a href="/login"
+         class="text-white border border-white px-3 py-1 text-sm rounded hover:bg-white hover:text-[#0e1342] transition">
+        Entrar
+      </a>
+      <a href="/assinatura"
+         class="bg-white text-[#0e1342] px-3 py-1 text-sm rounded hover:bg-gray-100 font-semibold transition">
+        Assinar
+      </a>
+    </div>
 
-</mat-toolbar>
+  </div>
+</header>
 
 
 
