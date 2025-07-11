@@ -31,6 +31,9 @@ export class MyProfile implements OnInit {
       email: [usuario.email || '', [Validators.required, Validators.email]],
       password: [usuario.password || '', Validators.required],
 
+
+      fist_name: [''],
+      Surname: [''],
       full_name: [''],
       birthDate: [''],
       gender: [''],
@@ -45,10 +48,34 @@ export class MyProfile implements OnInit {
     });
   }
 
-  salvar(): void {
-    console.log(this.form.value);
-    alert('Perfil salvo com sucesso!');
-    // você pode salvar no localStorage ou mandar para uma API no futuro
+  userImageUrl: string | null = null;
+
+onImageSelected(event: Event): void {
+  const file = (event.target as HTMLInputElement)?.files?.[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.userImageUrl = reader.result as string;
+      // Aqui você pode salvar a imagem no localStorage, backend ou onde preferir
+    };
+    reader.readAsDataURL(file);
   }
+}
+
+
+  salvar(): void {
+  const firstName = this.form.get('fist_name')?.value || '';
+  const surname = this.form.get('Surname')?.value || '';
+
+  const fullName = `${firstName.trim()} ${surname.trim()}`.trim();
+
+  // Atualiza o campo full_name
+  this.form.get('full_name')?.setValue(fullName);
+
+  console.log('Nome completo:', fullName);
+
+  // Aqui você pode enviar os dados atualizados para backend, salvar no localStorage etc.
+}
+
 }
 

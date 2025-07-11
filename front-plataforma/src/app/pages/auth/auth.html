@@ -4,31 +4,91 @@
   </h2>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    
+    <!-- Nome -->
     <div *ngIf="!isLoginMode">
       <label for="name">Nome</label>
-      <input id="name" formControlName="name" placeholder="Seu nome"
+      <input id="name" formControlName="name" placeholder="Nome de Usuário"
         class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
     </div>
 
+    <div *ngIf="loginError" class="bg-red-600 text-white px-4 py-2 rounded mt-2 animate-bounce shadow">
+  {{ loginError }}
+</div>
+
+
+    <!-- Email -->
     <label for="email">E-mail</label>
     <input id="email" type="email" formControlName="email" placeholder="Seu e-mail"
       class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
 
+    <!-- Senha -->
     <label for="password">Senha</label>
-    <input id="password" type="password" formControlName="password"
-      [placeholder]="isLoginMode ? 'Sua senha' : 'Informe pelo menos 8 dígitos'"
-      class="w-full px-4 py-2 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+    <div class="relative">
+      <input id="password"
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        [placeholder]="isLoginMode ? 'Sua senha' : 'Informe pelo menos 8 dígitos'"
+        class="w-full px-4 py-2 pr-10 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      <button type="button"
+        class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+        (click)="togglePasswordVisibility()">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
 
+    <!-- Confirmar Senha -->
+    <div *ngIf="!isLoginMode">
+      <label for="confirmPassword">Repita a senha</label>
+      <div class="relative">
+        <input id="confirmPassword"
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          formControlName="confirmPassword"
+          placeholder="Repita a senha"
+          class="w-full px-4 py-2 pr-10 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <button type="button"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+          (click)="toggleConfirmPasswordVisibility()">
+          {{ showConfirmPassword ? '🙈' : '👁️' }}
+        </button>
+           
+      </div>
+
+       <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+     class="text-red-400 text-sm">
+  <div *ngIf="form.get('name')?.errors?.['maxlength']">
+    Nome não pode ter mais que 10 caracteres.
+  </div>
+  <div *ngIf="form.get('name')?.errors?.['pattern']">
+    Nome não pode conter espaços.
+  </div>
+</div>
+
+
+      <div *ngIf="form.get('confirmPassword')?.hasError('mismatch') && form.get('confirmPassword')?.touched"
+        class="text-red-400 text-sm">
+        As senhas não coincidem.
+      </div>
+          <div *ngIf="form.get('password')?.errors?.['pattern'] && form.get('password')?.touched"
+           class="text-red-400 text-sm">
+           *senha deve conter no minimo<br>*um caracter<br>*uma Letra maiúscula
+          </div>
+
+    </div>
+
+    <!-- Esqueci senha -->
     <div class="text-right">
       <a href="#" class="text-sm text-purple-400 hover:underline">Esqueci minha senha</a>
     </div>
 
+    <!-- Botão -->
     <button type="submit"
       class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-md font-semibold">
       {{ isLoginMode ? 'Entrar' : 'Cadastrar' }}
     </button>
   </form>
 
+  <!-- Alternância -->
   <div class="text-center text-sm">
     {{ isLoginMode ? 'Não tem uma conta?' : 'Já tem uma conta?' }}
     <button (click)="toggleMode()" class="text-purple-400 hover:underline ml-1">
@@ -36,5 +96,4 @@
     </button>
   </div>
 </div>
-
 

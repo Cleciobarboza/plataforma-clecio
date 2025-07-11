@@ -1,0 +1,335 @@
+body {
+  color: white;
+}
+
+.form-group {
+  display: flex; /* Makes the container a flex container */
+  align-items: center; /* Vertically aligns items in the middle */
+  gap: 10px; /* Adds space between the label and the input */
+  margin-bottom: 15px;/* Space between form groups */
+}
+
+/* Styles for the form groups (label and input side-by-side) */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between label and input */
+  margin-bottom: 15px; /* Space between form groups */
+  text-align: right; /* Aligns label text to the right */
+}
+
+/* Optional: Adjust label width for better alignment if needed */
+.form-group label {
+  min-width: 120px; /* Gives labels a consistent width */
+  text-align: right; /* Aligns label text to the right */
+}
+
+/* Styles for the Card */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #8a2be2; /* 2px solid purple border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px; /* Limits card width */
+  margin: 50px auto; /* Centers the card on the page */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adds space between card elements */
+}
+
+.card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Styles for the Button */
+.btn-altera {
+  background-color: #8a2be2; /* Purple color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: flex-end; /* Aligns button to the right */
+  margin-top: 10px; /* Space above the button */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.btn-altera:hover {
+  background-color: #6a1aab; /* Darker purple on hover */
+}
+
+/* Add this new CSS for the form-row */
+.form-row {
+  display: flex; /* Makes items inside flow horizontally */
+  flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+  gap: 20px; /* Adds space between the profession and education groups */
+  justify-content: space-between; /* Distributes space between items */
+  width: 100%; /* Ensures it takes full width of its parent */
+}
+
+/* Ensure form-group itself doesn't take full width within form-row */
+.form-row .form-group {
+  flex: 1; /* Allows each form-group to grow and shrink */
+  min-width: 200px; /* Ensures they don't get too small before wrapping */
+  margin-bottom: 0; /* Remove bottom margin if applied elsewhere, as gap handles spacing */
+}
+
+/* Existing CSS (make sure these are also present) */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 15px; If you had this, consider removing it or reducing it for .form-row's direct children */
+}
+
+.form-group label {
+  min-width: 120px;
+  text-align: right;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #8a2be2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust this if the gap makes the card too tall */
+}
+
+.card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.btn-altera {
+  background-color: #8a2be2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: flex-end;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-altera:hover {
+  background-color: #6a1aab;
+}
+
+/* Add this new CSS for the form-row */
+.form-row {
+  display: flex; /* Makes items inside flow horizontally */
+  flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+  gap: 20px; /* Adds space between the profession and education groups */
+  justify-content: space-between; /* Distributes space between items */
+  width: 100%; /* Ensures it takes full width of its parent */
+}
+/* Ensure form-group itself doesn't take full width within form-row */
+.form-row .form-group {
+  flex: 1; /* Allows each form-group to grow and shrink */
+  min-width: 200px; /* Ensures they don't get too small before wrapping */
+  margin-bottom: 0; /* Remove bottom margin if applied elsewhere, as gap handles spacing */
+}
+
+/* Existing CSS (make sure these are also present) */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 15px; If you had this, consider removing it or reducing it for .form-row's direct children */
+}
+
+.form-group label {
+  min-width: 120px;
+  text-align: right;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #8a2be2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust this if the gap makes the card too tall */
+}
+
+.card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.btn-altera {
+  background-color: #8a2be2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: flex-end;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-altera:hover {
+  background-color: #6a1aab;
+}
+
+/* Ensure form-group itself doesn't take full width within form-row */
+.form-row .form-group {
+  flex: 1; /* Allows each form-group to grow and shrink */
+  min-width: 200px; /* Ensures they don't get too small before wrapping */
+  margin-bottom: 0; /* Remove bottom margin if applied elsewhere, as gap handles spacing */
+}
+
+/* Existing CSS (make sure these are also present) */
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 15px; If you had this, consider removing it or reducing it for .form-row's direct children */
+}
+
+.form-group label {
+  min-width: 120px;
+  text-align: right;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #8a2be2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adjust this if the gap makes the card too tall */
+}
+
+.card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.btn-altera {
+  background-color: #8a2be2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: flex-end;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-altera:hover {
+  background-color: #6a1aab;
+}
+/* Add this new CSS for the form-row */
+.form-row {
+  display: flex; /* Makes items inside flow horizontally */
+  flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+  gap: 20px; /* Adds space between the profession and education groups */
+  justify-content: space-between; /* Distributes space between items */
+  width: 100%; /* Ensures it takes full width of its parent */
+}
+
+/* Ensure form-group itself doesn't take full width within form-row */
+.form-row .form-group {
+  flex: 1; /* Allows each form-group to grow and shrink */
+  min-width: 200px; /* Ensures they don't get too small before wrapping */
+  margin-bottom: 0; /* Remove bottom margin if applied elsewhere, as gap handles spacing */
+}
+
+/* Add this to your CSS file */
+.custom-textarea-height {
+  height: 150px; /* Or any other value like 10rem, 20vh, etc. */
+  resize: vertical; /* Allows user to vertically resize, optional */
+}
+
+/* Estilos para o Card Pós Cadastro */
+.card-2 {
+  background-color: #fff;
+  border-radius: 8px;
+  /* Adicionada a borda azul */
+  border: 2px solid #007bff; /* 2px de borda sólida na cor azul */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 3000px; /* Limita a largura do card */
+  margin: 20px auto; /* Centraliza o card e adiciona margem */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adiciona espaço entre os elementos dentro do card */
+  align-items: flex-start; /* Alinha os elementos à esquerda */
+}
+/* Alinha os form-groups individualmente */
+.card-2 .form-group {
+  width: 100%; /* Garante que o grupo se estenda */
+  display: flex;
+  justify-content: flex-start; /* Alinha label + input para esquerda*/
+  align-items: center;
+  gap: 10px;
+}
+
+/* Deixa os labels alinhados com uma largura fixa */
+.card-2 .form-group label {
+  min-width: 140px;
+   text-align: left; /* << Deixa o texto alinhado à esquerda */
+}
+
+/* Inputs e selects mais consistentes */
+.card-2 input,
+.card-2 select,
+.card-2 textarea {
+  flex: 1;
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Inputs e selects mais consistentes */
+.card-2 input,
+.card-2 select,
+.card-2 textarea {
+  flex: 1;
+  max-width: 300px;
+  width: 100%;
+}
+
+/* Inputs e selects mais consistentes */
+.card-2 input,
+.card-2 select,
+.card-2 textarea {
+  flex: 1;
+  max-width: 300px;
+  width: 100%;
+}
+
+
+
+
