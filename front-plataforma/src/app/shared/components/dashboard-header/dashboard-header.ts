@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from "@angular/common";
+import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard-header',
@@ -12,38 +12,84 @@ import { Router } from '@angular/router';
 export class DashboardHeader implements OnInit {
   usuarioLogado: any;
   menuAberto: boolean = false;
+  sidebarAberta: boolean = false; // 👈 adiciona essa linha
 
   constructor(private router: Router, private eRef: ElementRef) {}
 
-  irParaHome(): void {
-   this.menuAberto = false; // vai para ambiente do al
-   this.router.navigate(['/dashboard']);
+ngOnInit(): void {
+  const usuario = localStorage.getItem('usuarioLogado');
+  if (usuario) {
+    this.usuarioLogado = JSON.parse(usuario);
   }
 
+  // Aplicar o tema salvo
+  const temaSalvo = localStorage.getItem('modo-tema');
+  if (temaSalvo === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+}
+
+
+  toggleMenu(): void {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  toggleSidebar(): void {
+    this.sidebarAberta = !this.sidebarAberta;
+  }
+
+  irParaHome(): void {
+    this.menuAberto = false;
+    this.router.navigate(['/dashboard']);
+  }
 
   irParaPec(): void {
-   this.menuAberto = false; // vai para ambiente do al
-   this.router.navigate(['/my-perfil']);
+    this.menuAberto = false;
+    this.router.navigate(['/my-perfil']);
   }
 
   irParaPerfil(): void {
-   this.menuAberto = false; // fecha o menu
-   this.router.navigate(['/my-profile']);
+    this.menuAberto = false
+    this.router.navigate(['/my-profile']);
   }
-
-
 
   irFora(): void {
-   this.menuAberto = false; //volta para inicio
-   this.router.navigate(['/']);
+    this.menuAberto = false;
+    this.router.navigate(['/']);
+  }
+
+irDark(): void {
+  document.documentElement.classList.add('dark'); // adiciona classe "dark" no <html>
+  localStorage.setItem('modo-tema', 'dark'); // salva preferência
+}
+
+irOfcourse(): void {
+  document.documentElement.classList.remove('dark');
+  localStorage.setItem('modo-tema', 'light');
+}
+
+
+  irVideo(): void {
+    this.sidebarAberta = false;
+    this.router.navigate(['/dashboard']);
+  }
+
+   irComplaint(): void {
+    this.sidebarAberta = false;
+    this.router.navigate(['/my-perfil']);
   }
 
 
-  ngOnInit(): void {
-    const usuario = localStorage.getItem('usuarioLogado');
-    if (usuario) {
-      this.usuarioLogado = JSON.parse(usuario);
-    }
+  irPayment(): void {
+    this.sidebarAberta = false;
+    this.router.navigate(['/my-profile']);
+  }
+
+   irDelete(): void {
+    this.sidebarAberta = false;
+    this.router.navigate(['/']);
   }
 
   logout(): void {
@@ -51,14 +97,8 @@ export class DashboardHeader implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  toggleMenu(): void {
-    this.menuAberto = !this.menuAberto;
-  }
-
-  // 👇 Agora está dentro da classe, com '$event' correto e sem erro
   @HostListener('document:click', ['$event'])
   clickFora(event: MouseEvent) {
-    // Verificação extra para garantir segurança no TS
     if (
       this.menuAberto &&
       this.eRef?.nativeElement &&
@@ -68,5 +108,3 @@ export class DashboardHeader implements OnInit {
     }
   }
 }
-
-

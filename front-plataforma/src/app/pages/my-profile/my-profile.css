@@ -26,7 +26,7 @@ body {
 
 /* Styles for the Card */
 .card {
-  background-color: #fff;
+  background-color: #136185;
   border-radius: 8px;
   border: 2px solid #8a2be2; /* 2px solid purple border */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -93,7 +93,7 @@ body {
 }
 
 .card {
-  background-color: #fff;
+  background-color: #185c83;
   border-radius: 8px;
   border: 2px solid #8a2be2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -158,7 +158,7 @@ body {
 }
 
 .card {
-  background-color: #fff;
+  background-color: #083055;
   border-radius: 8px;
   border: 2px solid #8a2be2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -215,7 +215,7 @@ body {
 }
 
 .card {
-  background-color: #fff;
+  background-color: #043450;
   border-radius: 8px;
   border: 2px solid #8a2be2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -274,14 +274,15 @@ body {
 
 /* Estilos para o Card Pós Cadastro */
 .card-2 {
-  background-color: #fff;
+  border-radius: 8px;
+  background-color: #043450;
   border-radius: 8px;
   /* Adicionada a borda azul */
   border: 2px solid #007bff; /* 2px de borda sólida na cor azul */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 30px;
   width: 100%;
-  max-width: 3000px; /* Limita a largura do card */
+  max-width: 1200px; /* Limita a largura do card */
   margin: 20px auto; /* Centraliza o card e adiciona margem */
   display: flex;
   flex-direction: column;
@@ -317,7 +318,7 @@ body {
 .card-2 select,
 .card-2 textarea {
   flex: 1;
-  max-width: 300px;
+  max-width: 1000px;
   width: 100%;
 }
 
@@ -329,6 +330,41 @@ body {
   max-width: 300px;
   width: 100%;
 }
+
+/* Modo escuro para o card */
+.dark .card {
+  background-color: #1a1a2e;
+  border-color: #6a1aab;
+}
+
+.dark .card-2 {
+  background-color: #1a1a2e;
+  border-color: #6a1aab;
+}
+
+/* Texto dos títulos e labels */
+.dark .card h2,
+.dark .card-2 h2,
+.dark label {
+  color: #ffffff;
+}
+
+/* Campos de input, select, textarea no modo escuro */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #2e2e3a;
+  color: #ffffff;
+  border-color: #444;
+}
+
+/* Placeholder mais claro no modo escuro */
+.dark input::placeholder,
+.dark select::placeholder,
+.dark textarea::placeholder {
+  color: #bbb;
+}
+
 
 
 

@@ -1,53 +1,65 @@
-<header class="bg-gray-900 text-white px-6 py-3 shadow-md flex justify-between items-center h-16 relative">
-
-  <!-- Esquerda: Logo + texto -->
+<header class="bg-gray-900 dark:bg-purple-700 text-white px-6 py-3 shadow-md flex justify-between items-center h-16 relative">
   <div class="flex items-center gap-3">
-    <img src="assets/upskill.png" alt="Logo" class="h-8 w-auto">
+    <button (click)="toggleSidebar()" class="focus:outline-none">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <img src="/public/favicon.ico" alt="Logo" class="h-8 w-auto ml-2">
     <span class="font-semibold text-lg">Upskill-Dev</span>
   </div>
+  
 
-  <!-- Centro: Título -->
-  <h1 class="text-lg font-semibold absolute left-1/2 transform -translate-x-1/2">
-    Bem-vindo à sua Dashboard
-  </h1>
-
-  <!-- Direita: Usuário + Menu -->
+  <!-- Direita: Ícones e Usuário -->
   <div class="flex items-center gap-4">
     <!-- Ícone de notificação -->
     <button class="relative">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 
-             6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 
-             6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 
-             1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+               6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 
+               6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 
+               1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
       </svg>
     </button>
 
-    <!-- Usuário + Dropdown -->
-<div class="relative">
-  <button (click)="toggleMenu()" class="flex items-center gap-2 text-sm font-medium hover:underline focus:outline-none">
-    <img src="assets/user.jpg" alt="Foto do Usuário" class="w-8 h-8 rounded-full border-2 border-white">
-    <span>{{ usuarioLogado?.name || 'Usuário' }}</span>
-  </button>
+    <!-- Usuário -->
+    <div class="relative">
+      <button (click)="toggleMenu()" class="flex items-center gap-2 text-sm font-medium hover:underline focus:outline-none">
+        <img src="/src/app/assets/profissional/foto-perfil-clecio.png" alt="Foto do Usuário" class="w-8 h-8 rounded-full border-2 border-white">
+        <span>{{ usuarioLogado?.name || 'Usuário' }}</span>
+      </button>
 
-  <div 
-    *ngIf="menuAberto" 
-    class="absolute right-0 mt-2 w-52 bg-white text-black rounded-md shadow-lg z-50"
-  >
-     <a (click)="irParaHome()" class="block px-4 py-2 text-sm hover:bg-gray-100">Home</a>
-    <a (click)="irParaPec()" class="block px-4 py-2 text-sm hover:bg-gray-100">Perfil & Certificados</a>
-    <a (click)="irParaPerfil()" class="block px-4 py-2 text-sm hover:bg-gray-100">
-     Editar Perfil
-</a>
-
-    <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Minha Matrícula</a>
-    <button (click)="irFora()" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Sair</button>
+      <!-- Dropdown -->
+      <div *ngIf="menuAberto" class="absolute right-0 mt-2 w-52 bg-white text-black rounded-md shadow-lg z-50">
+        <a (click)="irParaHome()" class="block px-4 py-2 text-sm hover:bg-gray-100">Home</a>
+        <a (click)="irParaPec()" class="block px-4 py-2 text-sm hover:bg-gray-100">Perfil & Certificados</a>
+        <a (click)="irParaPerfil()" class="block px-4 py-2 text-sm hover:bg-gray-100">Editar Perfil</a>
+        <a class="block px-4 py-2 text-sm hover:bg-gray-100">Minha Matrícula</a>
+        <button (click)="irFora()" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Sair</button>
+      </div>
+    </div>
   </div>
-</div>
-
-
-
-  </div>
-
 </header>
+
+<!-- Sidebar lateral -->
+<div *ngIf="sidebarAberta" class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="toggleSidebar()">
+  <aside class="bg-white w-64 h-full shadow-lg fixed left-0 top-0 z-50 p-6" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-semibold">Menu</h2>
+      <button (click)="toggleSidebar()">
+        <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <ul class="space-y-4 text-gray-800">
+      <li><a (click)="irDark()">Tema Escuro</a></li>
+      <li><a (click)="irOfcourse()">Tema Claro</a></li>
+      <li><a (click)="irVideo()">Videos </a></li>
+      <li><a (click)="irComplaint()">Reclamação</a></li>
+      <li><a (click)="irPayment()">Pagamento</a></li>
+       <li><a (click)="irDelete()">Deletar Conta</a></li>
+    </ul>
+  </aside>
+</div>

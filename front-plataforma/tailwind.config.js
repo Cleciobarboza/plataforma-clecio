@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class', // << ISSO É OBRIGATÓRIO
   content: [
     "./src/**/*.{html,ts}",
   ],
@@ -13,6 +14,7 @@ module.exports = {
         'meu-azul': '#1da1f2',       // cor do Twitter
         'meu-verde': '#2ecc71',      // cor de sucesso
         'meu-cinza': '#bdc3c7',      // cinza claro
+        'meu-azul-escuro':'#136185',
         'roxorocket': {
           50: '#6b21a8',
           100: '#4338ca'

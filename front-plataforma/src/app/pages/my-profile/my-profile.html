@@ -1,10 +1,6 @@
-<header class="bg-white shadow p-4 flex justify-between items-center">
-  <span class="text-sm font-medium text-gray-700">
-    {{ usuario?.name }}
-  </span>
-</header>
 
-<div class="max-w-2xl mx-auto mt-6 p-6 bg-white text-black shadow rounded space-y-6">
+
+<div class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white">
   <div class="flex justify-center">
     <div class="relative w-24 h-24">
       <img [src]="userImageUrl || 'https://via.placeholder.com/100'" alt="Foto de perfil"
@@ -19,114 +15,116 @@
     <div class="card">
       <h2>Detalhes do Usuário</h2>
       <div class="form-group">
-        <label for="name-input">Usuário:</label>
+        <label for="name-input" class="dark:text-white">Usuário:</label>
         <input id="name-input" formControlName="name" placeholder="Usuário"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
           readonly />
       </div>
       <div class="form-group">
-        <label for="email-input">E-mail:</label>
+        <label for="email-input" class="dark:text-white">E-mail:</label>
         <input id="email-input" formControlName="email" type="email" placeholder="Email"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
           readonly />
       </div>
       <div class="form-group">
-        <label for="password-input">Senha:</label>
+        <label for="password-input" class="dark:text-white">Senha:</label>
         <input id="password-input" formControlName="password" type="password" placeholder="Senha"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
           readonly />
       </div>
       <button class="btn-altera" disabled>Alterar</button>
     </div>
 
-<div class="card-2">
-  <div class="form-row">
-    <div class="form-group">
-      <label for="first_name">Nome:</label>
-      <input id="first_name" formControlName="first_name" placeholder="Nome" class="p-2 border rounded" />
-    </div>
-    <div class="form-group">
-      <label for="surname">Sobrenome:</label>
-      <input id="surname" formControlName="surname" placeholder="Sobrenome" class="p-2 border rounded" />
-    </div>
-  </div>
+    <div class="card-2">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first_name" class="dark:text-white">Nome:</label>
+          <input id="first_name" formControlName="first_name" placeholder="Nome"
+            class="p-2 border rounded dark:text-white dark:bg-gray-800" />
+        </div>
+        <div class="form-group">
+          <label for="surname" class="dark:text-white">Sobrenome:</label>
+          <input id="surname" formControlName="surname" placeholder="Sobrenome"
+            class="p-2 border rounded dark:text-white dark:bg-gray-800" />
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="gender">Gênero:</label>
-      <select id="gender" formControlName="gender"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-        <option value="">Selecione</option>
-        <option value="masculino">Masculino</option>
-        <option value="feminino">Feminino</option>
-        <option value="outro">Outro</option>
-        <option value="nao-informar">Prefiro não informar</option>
-      </select>
-    </div>
-    
-  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gender" class="dark:text-white">Gênero:</label>
+          <select id="gender" formControlName="gender"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
+            <option value="">Selecione</option>
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="outro">Outro</option>
+            <option value="nao-informar">Prefiro não informar</option>
+          </select>
+        </div>
+      </div>
 
-  <div class="form-group">
-      <label for="birthDate">Data de Nascimento:</label>
-      <input id="birthDate" formControlName="birthDate" type="date"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500" />
-    </div>
+      <div class="form-group">
+        <label for="birthDate" class="dark:text-white">Data de Nascimento:</label>
+        <input id="birthDate" formControlName="birthDate" type="date"
+          class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800" />
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="profession">Profissão:</label>
-      <select id="profession" formControlName="profession"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-        <option value="">selecione</option>
-        <option value="estudante">Estudante</option>
-        <option value="engenheiro">Engenheiro</option>
-        <option value="professor">Professor</option>
-        <option value="medico">Médico</option>
-        <option value="desenvolvedor">Desenvolvedor</option>
-        <option value="analista">Analista</option>
-        <option value="outras">Outras</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="education">Escolaridade:</label>
-      <select id="education" formControlName="education"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-        <option value="">Selecione</option>
-        <option value="fundamental-incompleto">Fundamental Incompleto</option>
-        <option value="fundamental-completo">Fundamental Completo</option>
-        <option value="medio-incompleto">Médio Incompleto</option>
-        <option value="medio-completo">Médio Completo</option>
-        <option value="superior-incompleto">Superior Incompleto</option>
-        <option value="superior-completo">Superior Completo</option>
-        <option value="pos-graduacao">Pós-Graduação</option>
-        <option value="mestrado">Mestrado</option>
-        <option value="doutorado">Doutorado</option>
-        <option value="outras">Outras</option>
-      </select>
-    </div>
-  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="profession" class="dark:text-white">Profissão:</label>
+          <select id="profession" formControlName="profession"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
+            <option value="">selecione</option>
+            <option value="estudante">Estudante</option>
+            <option value="engenheiro">Engenheiro</option>
+            <option value="professor">Professor</option>
+            <option value="medico">Médico</option>
+            <option value="desenvolvedor">Desenvolvedor</option>
+            <option value="analista">Analista</option>
+            <option value="outras">Outras</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="education" class="dark:text-white">Escolaridade:</label>
+          <select id="education" formControlName="education"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
+            <option value="">Selecione</option>
+            <option value="fundamental-incompleto">Fundamental Incompleto</option>
+            <option value="fundamental-completo">Fundamental Completo</option>
+            <option value="medio-incompleto">Médio Incompleto</option>
+            <option value="medio-completo">Médio Completo</option>
+            <option value="superior-incompleto">Superior Incompleto</option>
+            <option value="superior-completo">Superior Completo</option>
+            <option value="pos-graduacao">Pós-Graduação</option>
+            <option value="mestrado">Mestrado</option>
+            <option value="doutorado">Doutorado</option>
+            <option value="outras">Outras</option>
+          </select>
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="phone">Celular:</label>
-      <input id="phone" formControlName="phone" placeholder="Telefone" class="p-2 border rounded" />
-    </div>
-    <div class="form-group">
-      <label for="country">Nacionalidade:</label>
-      <select id="country" formControlName="country"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-        <option value="">Selecione</option>
-        <option value="Brazil">Brasil</option>
-        <option value="USA">Estados Unidos</option>
-        </select>
-    </div>
-  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone" class="dark:text-white">Celular:</label>
+          <input id="phone" formControlName="phone" placeholder="Telefone"
+            class="p-2 border rounded dark:text-white dark:bg-gray-800" />
+        </div>
+        <div class="form-group">
+          <label for="country" class="dark:text-white">Nacionalidade:</label>
+          <select id="country" formControlName="country"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
+            <option value="">Selecione</option>
+            <option value="Brazil">Brasil</option>
+            <option value="USA">Estados Unidos</option>
+          </select>
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label for="city">Cidade:</label>
-      <select id="city" formControlName="city"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city" class="dark:text-white">Cidade:</label>
+          <select id="city" formControlName="city"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
         <option value="">Selecione</option>
         <option value="AC">Acre</option>
         <option value="AL">Alagoas</option>
@@ -158,11 +156,11 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="state">UF:</label>
-      <select id="state" formControlName="state"
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
-        [disabled]="!form.get('state')!.value">
+       <div class="form-group">
+          <label for="state" class="dark:text-white">UF:</label>
+          <select id="state" formControlName="state"
+            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
+            [disabled]="!form.get('state')!.value">
         class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
         <option value="">Selecione</option>
         <option value="AC">AC</option>
@@ -193,17 +191,20 @@
         <option value="SE">SE</option>
         <option value="TO">TO</option>
       </select>
+     </div>
+      </div>
+
+            <div class="description-block">
+        <label for="description" class="dark:text-white">Conte um pouco sobre você:</label>
+        <textarea id="description" formControlName="description" placeholder="Descrição" rows="6"
+          class="p-2 border rounded custom-textarea-height dark:text-white dark:bg-gray-800" maxlength="500"></textarea>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded">
+        Salvar alterações
+      </button>
     </div>
-  </div>
-
-  <label for="description">Conte um pouco sobre você:</label>
-  <textarea id="description" formControlName="description" placeholder="Descrição" rows="6"
-    class="p-2 border rounded custom-textarea-height" maxlength="500"></textarea>
-
-  <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded">
-    Salvar alterações
-  </button>
-</div>
-   </form>
+  </form>
 </div>
 <app-footer></app-footer>

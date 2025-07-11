@@ -21,3 +21,10 @@ describe('MyProfile', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// Exemplo no componente (modo escuro)
+document.documentElement.classList.add('dark');
+
+// Exemplo para voltar ao claro
+document.documentElement.classList.remove('dark');
+
