@@ -47,12 +47,17 @@ ngOnInit(): void {
 
   irParaPec(): void {
     this.menuAberto = false;
-    this.router.navigate(['/my-perfil']);
+    this.router.navigate(['/profile-certification']);
   }
 
   irParaPerfil(): void {
     this.menuAberto = false
     this.router.navigate(['/my-profile']);
+  }
+
+  irParaMyregistration(): void {
+    this.menuAberto = false
+    this.router.navigate(['/my-registration']);
   }
 
   irFora(): void {
@@ -73,23 +78,39 @@ irOfcourse(): void {
 
   irVideo(): void {
     this.sidebarAberta = false;
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/course-and-videos']);
   }
 
    irComplaint(): void {
     this.sidebarAberta = false;
-    this.router.navigate(['/my-perfil']);
+    this.router.navigate(['/complaint']);
   }
 
 
   irPayment(): void {
     this.sidebarAberta = false;
-    this.router.navigate(['/my-profile']);
+    this.router.navigate(['/payment']);
   }
 
    irDelete(): void {
-    this.sidebarAberta = false;
+  this.sidebarAberta = false;
+
+  const confirmar = confirm("Você tem certeza que deseja excluir sua conta? Essa ação é irreversível.");
+
+  if (confirmar) {
+    // Deleta o usuário logado
+    const usuarioAtual = JSON.parse(localStorage.getItem('usuarioLogado') || '{}');
+    const listaUsuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+
+    // Remove da lista
+    const novaLista = listaUsuarios.filter((u: any) => u.email !== usuarioAtual.email);
+
+    localStorage.setItem('usuarios', JSON.stringify(novaLista));
+    localStorage.removeItem('usuarioLogado');
+
+    alert('Sua conta foi excluída com sucesso.');
     this.router.navigate(['/']);
+  }
   }
 
   logout(): void {

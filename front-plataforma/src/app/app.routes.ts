@@ -32,6 +32,7 @@ export const routes: Routes = [
           import('./pages/my-profile/my-profile').then(m => m.MyProfile)
       },
       
+      
     
       
     ]
@@ -54,5 +55,43 @@ export const routes: Routes = [
           import('./pages/auth/auth').then(m => m.Auth)
       }
     ]
-  }
+  },
+
+  // Rota: page não inplementada
+  {
+     path: 'em-breve',
+     loadComponent: () => import('./shared/components/page-nao-implementada/page-nao-implementada').then(m => m.PageNaoImplementada)
+  },
+  {
+     path: 'payment',
+     loadComponent: () => import('./pages/payment/payment').then(m => m.Payment)
+  },
+   {
+     path: 'complaint',
+     loadComponent: () => import('./pages/complaint/complaint').then(m => m.Complaint)
+  },
+   {
+     path: 'course-and-videos',
+     loadComponent: () => import('./pages/course-and-videos/course-and-videos').then(m => m.CourseAndVideos)
+  },
+   {
+     path: 'dashboard-course',
+     loadComponent: () => import('./pages/dashboard-course/dashboard-course').then(m => m.DashboardCourse)
+  },
+   {
+     path: 'my-registration',
+     loadComponent: () => import('./pages/my-registration/my-registration').then(m => m.MyRegistration)
+  },
+   {
+     path: 'profile-certification',
+     loadComponent: () => import('./pages/profile-certification/profile-certification').then(m => m.ProfileCertification)
+  },
+  {
+  path: 'to-sign',
+  loadComponent: () =>
+    import('./pages/to-sign/to-sign').then(m => m.ToSign)
+}
+
+
+
 ];

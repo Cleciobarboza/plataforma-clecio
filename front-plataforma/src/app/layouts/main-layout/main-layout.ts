@@ -4,6 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer';
 import { HeaderComponent } from '../../shared/components/header/header';
 
+
 @Component({
   selector: 'app-main-layout',
   standalone: true,
