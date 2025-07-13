@@ -4,15 +4,16 @@
   <!-- Conteúdo do Painel -->
   <main class="p-6">
     <app-course-card
-      [title]="'Curso de Angular'"
-      [image]="'/assets/cursos/cursoangular.jpeg'"
-      [isUnlocked]="temAcesso"
-    ></app-course-card>
+      [title]="'Nome do Curso'"
+      [image]="'url-da-imagem.jpg'"
+      [courseId]="'id-do-curso-123'"></app-course-card>
 
-    <label class="block mt-4 text-white" for="acessoLiberado">
-      <input id="acessoLiberado" type="checkbox" [(ngModel)]="temAcesso" />
-      Acesso Liberado?
-    </label>
+      <app-course-card
+      [title]="'Java'"
+      [image]="'url-da-imagem.jpg'"
+      [courseId]="'id-do-curso-124'" ></app-course-card>
+
+   
   </main>
 </div>
 <app-footer></app-footer>

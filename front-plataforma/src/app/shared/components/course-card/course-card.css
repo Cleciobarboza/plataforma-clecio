@@ -1,0 +1,19 @@
+/* Efeito de brilho para cards ativos (opcional, se quiser algo mais do que o hover) */
+.border-green-500.hover\:scale-105 {
+  /* Você já tem o hover:scale-105. Se quiser um brilho constante, adicione: */
+  /* box-shadow: 0 0 15px rgba(0, 255, 0, 0.6); */
+}
+
+/* Para reforçar o efeito de "apagado" para cards bloqueados */
+.border-red-500.opacity-60.grayscale {
+  /* O `opacity` e `grayscale` já fazem muito. Você pode adicionar: */
+  /* filter: brightness(50%); */ /* Escurece ainda mais */
+  /* pointer-events: none; */ /* Desabilita interações de mouse além do click do botão */
+}
+
+/*
+Se você quiser que o card bloqueado tenha um brilho vermelho constante, você pode adicionar:
+.border-red-500 {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+}
+*/

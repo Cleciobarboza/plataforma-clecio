@@ -1,28 +1,44 @@
 
 <app-dashboard-header></app-dashboard-header>
 
-<main>
+  <main class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white flex items-center justify-center">
+         <app-page-nao-implementada></app-page-nao-implementada>
+  <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full">
+    <h2 class="text-3xl font-bold mb-6 text-center text-indigo-600 dark:text-indigo-400">Status do Pagamento</h2>
 
-    <div>
-          <app-page-nao-implementada></app-page-nao-implementada>
+    <form [formGroup]="form" (ngSubmit)="salvarStatus()">
+      <div class="mb-6">
+        <label for="status" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Status da Assinatura:</label>
+        <select
+          id="status"
+          formControlName="status"
+          class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base bg-white dark:bg-gray-700 dark:text-white"
+        >
+          <option value="">Selecione um status</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+          <option value="pendente">Pendente</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-red-500 text-sm mt-1">
+          Por favor, selecione um status.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out"
+        [ngClass]="{'opacity-50 cursor-not-allowed': form.invalid}"
+      >
+        Atualizar Status
+      </button>
+    </form>
+
+    <div class="mt-8 text-center text-gray-600 dark:text-gray-400">
+      <p>O status atual da sua assinatura é: <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ usuario?.status || 'Não definido' }}</span></p>
     </div>
-
-    <div class="flex items-center justify-center my-6">
-  <button
-    (click)="temAcesso = !temAcesso"
-    [ngClass]="{
-      'bg-green-600': temAcesso,
-      'bg-red-600': !temAcesso
-    }"
-    class="px-6 py-3 text-white font-bold rounded-full transition duration-300 shadow-lg"
-  >
-    {{ temAcesso ? '🔓 Acesso Liberado' : '🔒 Acesso Bloqueado' }}
-  </button>
-
-
-</div>
-
-  
+  </div>
 </main>
 
 <app-footer></app-footer>
