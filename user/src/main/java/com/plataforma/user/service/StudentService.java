@@ -27,6 +27,7 @@ public class StudentService {
         // Atualiza os dados
         student.setFull_name(dto.full_name());
         student.setBirthDate(dto.birthDate());
+        student.setStartdate(dto.startdate()); // Corrigido para camelCase
         student.setGender(dto.gender());
         student.setProfession(dto.profession());
         student.setEducation(dto.education());
@@ -35,6 +36,8 @@ public class StudentService {
         student.setCity(dto.city());
         student.setState(dto.state());
         student.setDescription(dto.description());
+        student.setState(dto.state());
+        student.setStatus(dto.status()); // Corrigido para camelCase
         student.setCompleteRegistration(dto.completeRegistration());
 
         studentRepository.save(student);

@@ -114,17 +114,21 @@ setupForm() {
   const usuarios = this.getUser();
 
   if (this.isLoginMode) {
-    const usuario = usuarios.find(u => u.email === email && u.password === password);
-    if (usuario) {
-      this.loginError = null;
-      localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.loginError = 'E-mail ou senha incorretos!';
-      setTimeout(() => {
-        this.loginError = null;
-      }, 3000); // desaparece em 3 segundos
-    }
+   const usuario = usuarios.find(u => u.email === email);
+
+if (usuario && usuario.password === password) {
+  this.loginError = null;
+  localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+  this.router.navigate(['/dashboard']);
+} else {
+  this.loginError = 'E-mail ou senha incorretos!';
+  setTimeout(() => {
+    this.loginError = null;
+  }, 3000);
+}
+
+ 
+    
   } else {
     const usuarioExistente = usuarios.some(u => u.email === email);
     if (usuarioExistente) {
@@ -132,13 +136,20 @@ setupForm() {
       return;
     }
 
-    const novoUsuario: Usuario = { name, email, password };
-    usuarios.push(novoUsuario);
-    this.salveUser(usuarios);
-    alert('Usuário cadastrado com sucesso!');
-    this.toggleMode();
-  }
+    
 
-  this.form.reset();
+  const novoUsuario: Usuario = { name, email, password };
+
+// Remove possíveis registros antigos com mesmo email
+const listaFiltrada = usuarios.filter(u => u.email !== email);
+
+// Adiciona o novo e salva a lista atualizada (sem duplicatas)
+this.salveUser([...listaFiltrada, novoUsuario]);
+
+alert('Usuário cadastrado com sucesso!');
+this.toggleMode();
+this.form.reset();
+
 }
+  }
 }

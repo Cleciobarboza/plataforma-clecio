@@ -11,5 +11,7 @@ import { FooterComponent } from '../../shared/components/footer/footer';
   styleUrl: './course-and-videos.css'
 })
 export class CourseAndVideos {
+    temAcesso = false;
 
 }
+

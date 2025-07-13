@@ -1,12 +1,18 @@
-
 <div class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white">
   <!-- Barra Superior -->
 
-
   <!-- Conteúdo do Painel -->
   <main class="p-6">
-    <p>Bem-vindo à plataforma, {{ usuario?.name }}!</p>
-    <!-- Coloque mais conteúdo aqui -->
+    <app-course-card
+      [title]="'Curso de Angular'"
+      [image]="'/assets/cursos/cursoangular.jpeg'"
+      [isUnlocked]="temAcesso"
+    ></app-course-card>
+
+    <label class="block mt-4 text-white" for="acessoLiberado">
+      <input id="acessoLiberado" type="checkbox" [(ngModel)]="temAcesso" />
+      Acesso Liberado?
+    </label>
   </main>
 </div>
 <app-footer></app-footer>

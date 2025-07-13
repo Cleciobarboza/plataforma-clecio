@@ -6,7 +6,7 @@ import { FooterComponent } from '../../shared/components/footer/footer';
 
 @Component({
   selector: 'app-dashboard-course',
-  imports: [CommonModule, DashboardHeader, PageNaoImplementada, FooterComponent],
+  imports: [CommonModule, DashboardHeader, FooterComponent],
   templateUrl: './dashboard-course.html',
   styleUrl: './dashboard-course.css'
 })

@@ -11,29 +11,53 @@
   </div>
   <h2 class="text-2xl font-bold text-center">Editar Perfil</h2>
 
-  <form [formGroup]="form" (ngSubmit)="salvar()" class="grid gap-4">
-    <div class="card">
-      <h2>Detalhes do Usuário</h2>
-      <div class="form-group">
-        <label for="name-input" class="dark:text-white">Usuário:</label>
-        <input id="name-input" formControlName="name" placeholder="Usuário"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
-          readonly />
-      </div>
-      <div class="form-group">
-        <label for="email-input" class="dark:text-white">E-mail:</label>
-        <input id="email-input" formControlName="email" type="email" placeholder="Email"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
-          readonly />
-      </div>
-      <div class="form-group">
-        <label for="password-input" class="dark:text-white">Senha:</label>
-        <input id="password-input" formControlName="password" type="password" placeholder="Senha"
-          class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
-          readonly />
-      </div>
-      <button class="btn-altera" disabled>Alterar</button>
+<form [formGroup]="form" (ngSubmit)="salvar()" class="grid gap-4">
+
+  <div class="card">
+    <h2>Detalhes do Usuário</h2>
+
+    <div class="form-group">
+      <label for="name-input" class="dark:text-white">Usuário:</label>
+      <input id="name-input" formControlName="name" placeholder="Usuário"
+        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
+        [readonly]="!modoEdicao" />
     </div>
+
+    <div class="form-group" *ngIf="modoEdicao">
+      <label for="old-password" class="dark:text-white">Senha atual:</label>
+      <input id="old-password" type="password" formControlName="oldPassword"
+        placeholder="Senha atual"
+        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800" />
+    </div>
+
+    <div class="form-group" *ngIf="modoEdicao">
+      <label for="new-password" class="dark:text-white">Nova senha:</label>
+      <input id="new-password" type="password" formControlName="newPassword"
+        placeholder="Nova senha"
+        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800" />
+    </div>
+
+    <div class="form-group" *ngIf="modoEdicao">
+      <label for="confirm-password" class="dark:text-white">Confirmar nova senha:</label>
+      <input id="confirm-password" type="password" formControlName="confirmPassword"
+        placeholder="Confirme a nova senha"
+        class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800" />
+    </div>
+
+    <div class="mt-4">
+      <button *ngIf="!modoEdicao" type="button"
+        class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition"
+        (click)="modoEdicao = true">Alterar</button>
+
+      <button *ngIf="modoEdicao" type="submit"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+        Salvar
+      </button>
+    </div>
+  </div>
+
+
+
 
     <div class="card-2">
       <div class="form-row">
@@ -200,10 +224,12 @@
           class="p-2 border rounded custom-textarea-height dark:text-white dark:bg-gray-800" maxlength="500"></textarea>
       </div>
 
-      <button type="submit"
+     <button type="button"
+        (click)="salvarInformacoesPessoais()"
         class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded">
-        Salvar alterações
-      </button>
+         Salvar informações pessoais
+     </button>
+
     </div>
   </form>
 </div>

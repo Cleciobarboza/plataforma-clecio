@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../shared/components/footer/footer';
 import { PageNaoImplementada } from '../../shared/components/page-nao-implementada/page-nao-implementada';
 
+
 @Component({
   selector: 'app-payment',
   imports: [CommonModule, DashboardHeader, FooterComponent, PageNaoImplementada],
@@ -11,5 +12,5 @@ import { PageNaoImplementada } from '../../shared/components/page-nao-implementa
   styleUrl: './payment.css'
 })
 export class Payment {
-
+ temAcesso: boolean = false; 
 }

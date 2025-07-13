@@ -1,0 +1,44 @@
+/* src/app/pages/dashboard-course/dashboard-course.component.css */
+
+/* Estilos para o container principal da página, para centralizar o conteúdo */
+.container {
+  max-width: 1200px; /* Ou um valor menor, como 960px, 800px, dependendo do que você quer */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem; /* Padding geral para a página */
+}
+
+/* O contêiner do vídeo com a proporção 16:9 */
+.video-container {
+  position: relative;
+  width: 100%; /* Ocupa 100% da largura do seu pai (que pode ter uma max-width) */
+  padding-bottom: 56.25%; /* Mantém a proporção 16:9 */
+  height: 0;
+  overflow: hidden;
+  background-color: #000;
+  margin-bottom: 1.5rem; /* Espaçamento abaixo do vídeo */
+
+  /* Adicione uma largura máxima para limitar o tamanho do vídeo */
+  /* Este é o ponto crucial para controlar o "tamanho do visual" */
+  max-width: 800px; /* Exemplo: limite a largura do vídeo a 800px */
+  /* Para centralizar o vídeo se ele for menor que a largura total do contêiner pai */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Você pode adicionar estilos para o título do vídeo e parágrafo aqui também */
+h3 {
+  /* Estilos para o título do vídeo */
+}
+
+p {
+  /* Estilos para a descrição do vídeo */
+}

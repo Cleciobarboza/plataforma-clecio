@@ -1,15 +1,42 @@
 <app-dashboard-header></app-dashboard-header>
 
-<main>
+<main class="container mx-auto p-6">
+  <h2 class="text-3xl font-bold mb-4">Seu Curso e Vídeos</h2>
 
-    <div>
-           <app-page-nao-implementada></app-page-nao-implementada>
+  <div class="video-container relative w-full" style="padding-bottom: 56.25%; height: 0;">
+    <iframe
+      src="https://www.youtube.com/watch?v=m6sKN1VwmGMs"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      class="absolute top-0 left-0 w-full h-full"
+    ></iframe>
+  </div>
 
-    </div>
- 
+  <h3 class="text-xl font-semibold mt-8 mb-4">All New Outlander, o híbrido carregado de luxo | Cidade</h3>
+  <p class="text-gray-700">Este é o vídeo de exemplo que você solicitou para incorporar.</p>
 
-
-</main>
+  </main>
 
 <app-footer></app-footer>
+
+<style>
+/* Adicione este CSS ao seu dashboard-course.component.css ou a um arquivo de estilos global */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+  height: 0;
+  overflow: hidden;
+  background-color: #000; /* Fundo preto para preencher enquanto o vídeo carrega */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
 

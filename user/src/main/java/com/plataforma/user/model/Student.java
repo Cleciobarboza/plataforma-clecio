@@ -73,6 +73,12 @@ public class Student implements Serializable{
 
     @Column(name = "education")  
     private String education;
+
+    @Column(name ="startdate")
+    private LocalDate startdate;
+
+    @Column(name = "status")
+    private String status;
     
     @Column(name = "description", length = 500)
     private String description;

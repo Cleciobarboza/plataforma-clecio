@@ -16,5 +16,7 @@ public record StudentProfileDTO(
     String state,
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     String description,
+    LocalDate startdate,//implementar data e inicio da conta
+    String status,
     boolean completeRegistration
 ) {}
