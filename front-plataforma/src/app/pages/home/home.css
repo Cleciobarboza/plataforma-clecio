@@ -1,7 +1,7 @@
 .card-profissional-wrapper {
   display: flex;
   justify-content: center;
-  padding: 2.5rem 1rem;
+  padding: .5rem 1rem;
   background-color: #d7dae4; /* bg-blue-900 */
   color: white;
 }
@@ -75,17 +75,7 @@
   background-color: #f3f4f6;
 }
 /*
-  ----------------------------------------------------
-  ESTILOS DO TÍTULO "NOSSOS CURSOS"
-  ----------------------------------------------------
-*/
-/*
-  Este h2 sozinho pode ser muito genérico e afetar outros h2s.
-  É melhor aplicar o estilo diretamente na classe Tailwind no HTML
-  ou usar um seletor mais específico como:
-  .secao-cursos h2 { ... }
-  No seu HTML, o h2 dos cursos está dentro de um div com `text-center bg-slate-800 py-10 text-white`.
-  Podemos manter a especificidade diretamente no HTML ou usar um seletor combinado.
+
 */
 .text-center.bg-slate-800.py-10.text-white h2 { /* Seletor mais específico */
   font-size: 2.25rem; /* text-4xl */

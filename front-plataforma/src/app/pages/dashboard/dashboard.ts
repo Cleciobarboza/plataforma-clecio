@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CourseCard } from '../../shared/components/course-card/course-card';
 import { FreeCards } from "../../shared/components/free-cards/free-cards";
+import { LastWatchedCard } from '../../shared/components/last-watched-card/last-watched-card';
 
 
 
@@ -13,7 +14,7 @@ import { FreeCards } from "../../shared/components/free-cards/free-cards";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, CourseCard, FooterComponent, FreeCards], 
+  imports: [CommonModule, FormsModule, CourseCard, FooterComponent, FreeCards, LastWatchedCard], 
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

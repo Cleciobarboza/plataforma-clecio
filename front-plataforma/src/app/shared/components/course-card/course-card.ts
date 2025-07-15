@@ -56,6 +56,13 @@ export class CourseCard implements OnInit {
   } else {
     alert('🔒 Você precisa ter uma assinatura ativa para acessar este curso.');
   }
+  // Antes de redirecionar
+localStorage.setItem('ultimoCursoAssistido', JSON.stringify({
+  title: this.title,
+  image: this.image,
+  courseId: this.courseId
+}));
+
 }
 
 }
