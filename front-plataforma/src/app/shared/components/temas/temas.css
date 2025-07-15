@@ -1,0 +1,41 @@
+/* src/app/shared/components/temas/temas.css */
+.theme-option {
+  width: 120px; /* Largura fixa para cada miniatura de tema */
+  height: 80px; /* Altura fixa */
+  border: 2px solid transparent; /* Borda transparente padrão */
+  border-radius: 8px; /* Bordas arredondadas */
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative; /* Para o label */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.theme-option:hover {
+  transform: translateY(-3px); /* Pequeno efeito de elevação no hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.theme-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.theme-option.selected {
+  border-color: #8b5cf6; /* Cor da borda para o tema selecionado (roxo do Tailwind) */
+  box-shadow: 0 0 0 3px #8b5cf6, 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra mais forte */
+}
+
+.theme-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente para o texto */
+  color: white;
+  text-align: center;
+  font-size: 0.75rem; /* Texto pequeno */
+  padding: 4px 0;
+  pointer-events: none; /* Garante que o clique passe para o div pai */
+}

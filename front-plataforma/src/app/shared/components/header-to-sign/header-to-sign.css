@@ -1,0 +1,18 @@
+
+
+/* Adicione esta nova regra para as bordas múltiplas no header */
+.header-multi-border {
+  border-style: solid;
+  border-width: 1px; /* Primeira borda: Azul Clara Fina */
+  border-color: #87CEEB; /* Cor da Azul Clara (SkyBlue) */
+  
+  /* Segunda borda: Verde Escura. Usamos 'outline' para criar uma borda externa. */
+  outline: 1px solid #388E3C; /* Cor da Verde Escura (DarkGreen) */
+  outline-offset: -1px; /* Garante que o outline fique "colado" à borda principal */
+  
+  /* Terceira borda: Azul Clara Fina. Usamos 'box-shadow' para criar uma borda ainda mais externa. */
+  box-shadow: 0 0 0 2px #87CEEB; /* Cor da Azul Clara (SkyBlue) */
+}
+
+
+

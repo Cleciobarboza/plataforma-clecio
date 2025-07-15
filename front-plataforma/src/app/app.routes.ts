@@ -27,9 +27,11 @@ export const routes: Routes = [
           import('./pages/dashboard/dashboard').then(m => m.DashboardComponent)
       },
       {
-        path: 'dashboard-course/:id',
-         loadComponent: () => import('./pages/dashboard-course/dashboard-course').then(m => m.DashboardCourse)
+        path: 'dashboard-course/:courseId',
+        loadComponent: () => import('./pages/dashboard-course/dashboard-course').then(m => m.DashboardCourse)
       },
+
+
        {
         path: 'my-profile',
         loadComponent: () =>
@@ -73,14 +75,6 @@ export const routes: Routes = [
    {
      path: 'complaint',
      loadComponent: () => import('./pages/complaint/complaint').then(m => m.Complaint)
-  },
-   {
-     path: 'course-and-videos',
-     loadComponent: () => import('./pages/course-and-videos/course-and-videos').then(m => m.CourseAndVideos)
-  },
-   {
-     path: 'dashboard-course',
-     loadComponent: () => import('./pages/dashboard-course/dashboard-course').then(m => m.DashboardCourse)
   },
    {
      path: 'my-registration',

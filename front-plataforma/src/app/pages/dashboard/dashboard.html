@@ -1,19 +1,48 @@
 <div class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white">
-  <!-- Barra Superior -->
 
-  <!-- Conteúdo do Painel -->
+  
+
   <main class="p-6">
-    <app-course-card
-      [title]="'Nome do Curso'"
-      [image]="'url-da-imagem.jpg'"
-      [courseId]="'id-do-curso-123'"></app-course-card>
 
-      <app-course-card
-      [title]="'Java'"
-      [image]="'url-da-imagem.jpg'"
-      [courseId]="'id-do-curso-124'" ></app-course-card>
+<div class="w-full h-40 md:h-56 overflow-hidden mb-8">
+    <img [src]="currentBannerImage" alt="Banner do Perfil" class="w-full h-full object-cover" />
+  </div>
 
-   
+
+
+    <div class="w-full max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
+
+      <app-free-cards class="w-full" 
+        [title]="'Introdução'"
+        [image]="'../../assets/cursos/cardintrudoção.png'"
+        [courseId]="'id-do-curso-125'"></app-free-cards>
+
+      <app-course-card class="w-full" 
+        [title]="'Framework Angula'"
+        [image]="'../../assets/cursos/cursoangula.jpeg'"
+        [courseId]="'id-do-curso-123'"></app-course-card>
+
+      <app-course-card class="w-full" 
+        [title]="'Java Spring Boot'"
+        [image]="'../../assets/cursos/cursospring.png'"
+        [courseId]="'id-do-curso-124'" ></app-course-card>
+
+      <app-course-card class="w-full" 
+        [title]="'Infra Aws e Docker'"
+        [image]="'../../assets/cursos/aws.png'"
+        [courseId]="'id-do-curso-124'" ></app-course-card>
+
+      <app-course-card class="w-full" 
+        [title]="'Bancos de Dados'"
+        [image]="'../../assets/cursos/sql e postgres.png'"
+        [courseId]="'id-do-curso-124'" ></app-course-card>
+
+      <app-course-card class="w-full" 
+        [title]="'Novo Card'"
+        [image]="'../../assets/cursos/novocard.png'"
+        [courseId]="'id-do-curso-126'" ></app-course-card>
+
+    </div>
   </main>
 </div>
 <app-footer></app-footer>

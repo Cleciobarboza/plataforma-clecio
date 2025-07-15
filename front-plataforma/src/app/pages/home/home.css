@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   padding: 2.5rem 1rem;
-  background-color: #1e3a8a; /* bg-blue-900 */
+  background-color: #d7dae4; /* bg-blue-900 */
   color: white;
 }
 
@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background-color: #172554; /* bg-blue-950 */
+  background-color: #202125; /* bg-blue-950 */
   padding: 1.5rem;
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
   height: 6rem;
   border-radius: 9999px;
   object-fit: cover;
-  border: 2px solid white;
+  border: 2px solid rgb(255, 255, 255);
 }
 
 .card-profissional h2 {
@@ -61,7 +61,7 @@
   margin-bottom: 1.5rem;
 }
 
-.banner-hero a {
+.banner-hero a {  
   background-color: white;
   color: #6b21a8;
   padding: 0.75rem 1.5rem;
@@ -74,47 +74,163 @@
 .banner-hero a:hover {
   background-color: #f3f4f6;
 }
-
-/* Título "Nossos Cursos" */
-h2 {
-  font-size: 2.25rem;
-  font-weight: 800;
-  margin: 3rem 0 2rem;
+/*
+  ----------------------------------------------------
+  ESTILOS DO TÍTULO "NOSSOS CURSOS"
+  ----------------------------------------------------
+*/
+/*
+  Este h2 sozinho pode ser muito genérico e afetar outros h2s.
+  É melhor aplicar o estilo diretamente na classe Tailwind no HTML
+  ou usar um seletor mais específico como:
+  .secao-cursos h2 { ... }
+  No seu HTML, o h2 dos cursos está dentro de um div com `text-center bg-slate-800 py-10 text-white`.
+  Podemos manter a especificidade diretamente no HTML ou usar um seletor combinado.
+*/
+.text-center.bg-slate-800.py-10.text-white h2 { /* Seletor mais específico */
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 800;   /* font-extrabold */
+  margin: 3rem auto 2rem; /* mt-12 mb-8, centralizado */
   text-align: center;
-  
+  color: white; /* Garante que o título seja branco */
 }
 
-/* Cartões de cursos */
+
+/*
+  ----------------------------------------------------
+  ESTILOS DOS CARTÕES DE CURSOS (course-card)
+  ----------------------------------------------------
+*/
 .course-card {
-  background-color: white;
+  /* Fundo do card AGORA DEVE SER ESCURO (bg-gray-900 ou similar) */
+  /* A cor de fundo principal dos cards de curso é definida na div .content dentro do card. */
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(47, 63, 87, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Sombra ajustada para fundos escuros */
   transition: transform 0.3s ease;
+
+  /* Estilos para as MÚLTIPLAS BORDAS */
+  border-style: solid;
+  border-width: 1px; /* Primeira borda: Azul Clara Fina */
+  border-color: #87CEEB; /* Cor da Azul Clara (SkyBlue) */
+  
+  /* Segunda borda: Verde Escura. Usamos 'outline' para criar uma borda externa. */
+  outline: 1px solid #388E3C; /* Cor da Verde Escura (DarkGreen) */
+  outline-offset: -1px; /* Garante que o outline fique "colado" à borda principal */
+  
+  /* Terceira borda: Azul Clara Fina. Usamos 'box-shadow' para criar uma borda ainda mais externa. */
+  box-shadow: 0 0 0 2px #87CEEB; /* Cor da Azul Clara (SkyBlue) */
 }
 
 .course-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03); /* Levemente reduzido o scale para 1.03 para não ficar muito agressivo com as bordas */
 }
 
 .course-card img {
   width: 100%;
-  height: 4rem;
+  height: 8rem; /* Aumentado a altura da imagem para não ficar tão pequena */
   object-fit: cover;
 }
 
 .course-card .content {
-  padding: 6rem;
+  padding: 1.5rem; /* Reduzido de 6rem para um padding mais sensato */
+  /* Ajusta o fundo da área de conteúdo para escuro, conforme solicitado */
+  background-color: #1a202c; /* Cor do bg-gray-900 ou um preto #000 */
 }
 
 .course-card .content h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #e2e7ee; /* text-gray-800 */
+  font-size: 1.1rem; /* text-lg */
+  font-weight: 700; /* font-bold */
+  color: #ffffff; /* Corrigido para branco para contraste com o fundo escuro do card */
   margin-bottom: 0.5rem;
 }
 
 .course-card .content p {
-  font-size: 0.75rem;
-  color: #d2d5db; /* text-gray-700 */
+  font-size: 0.875rem; /* text-sm (era 0.75rem, text-xs) - melhorando legibilidade */
+  color: #a0aec0; /* Corrigido para um cinza claro para contraste com o fundo escuro do card */
+}
+
+/*
+  ----------------------------------------------------
+  ESTILOS DO FOOTER
+  ----------------------------------------------------
+*/
+footer {
+  /* A cor de fundo será definida no HTML com Tailwind (bg-black ou bg-slate-900) */
+  /* background-color: #041441; Removido/Comentado pois o Tailwind no HTML já define */
+  color: white;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid #374151; /* border-gray-700 */
+  text-align: center;
+  /* Adicionar as bordas múltiplas ao footer */
+  border-style: solid;
+  border-width: 1px; /* Primeira borda: Azul Clara Fina */
+  border-color: #87CEEB; /* Cor da Azul Clara (SkyBlue) */
+  
+  /* Segunda borda: Verde Escura. Usamos 'outline' para criar uma borda externa. */
+  outline: 1px solid #388E3C; /* Cor da Verde Escura (DarkGreen) */
+  outline-offset: -1px; /* Garante que o outline fique "colado" à borda principal */
+  
+  /* Terceira borda: Azul Clara Fina. Usamos 'box-shadow' para criar uma borda ainda mais externa. */
+  box-shadow: 0 0 0 2px #87CEEB; /* Cor da Azul Clara (SkyBlue) */
+}
+
+footer section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+footer h2 {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 800;   /* font-extrabold */
+  color: #f9fafb;     /* text-white */
+  margin-bottom: 2.5rem;
+}
+
+footer .grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) { /* sm */
+  footer .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*
+  A media query @media (min-width: 7768px) é um valor muito alto e provavelmente nunca será atingido.
+  Mudei para 768px para corresponder a `md` do Tailwind ou um breakpoint customizado sensato.
+*/
+@media (min-width: 768px) { /* md */
+  footer .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*
+  A media query @media (min-width: 1400px) com repeat(6, 3fr) parece estranha (6 colunas com 3 frações cada).
+  Normalmente seria repeat(6, 1fr). Corrigi para algo mais convencional para lg/xl.
+*/
+@media (min-width: 1024px) { /* lg */
+  footer .grid {
+    grid-template-columns: repeat(4, 1fr); /* Exemplo: 4 colunas em telas grandes */
+  }
+}
+
+@media (min-width: 1280px) { /* xl */
+  footer .grid {
+    grid-template-columns: repeat(6, 1fr); /* Exemplo: 6 colunas em telas muito grandes */
+  }
+}
+
+
+footer .icons,
+footer .apps {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
 }

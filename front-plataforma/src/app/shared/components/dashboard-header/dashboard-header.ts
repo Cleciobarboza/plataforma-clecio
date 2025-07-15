@@ -12,7 +12,8 @@ import { Router } from "@angular/router";
 export class DashboardHeader implements OnInit {
   usuarioLogado: any;
   menuAberto: boolean = false;
-  sidebarAberta: boolean = false; // 👈 adiciona essa linha
+  sidebarAberta: boolean = false; 
+   userImageUrl: string | null = null;
 
   constructor(private router: Router, private eRef: ElementRef) {}
 
@@ -20,6 +21,7 @@ ngOnInit(): void {
   const usuario = localStorage.getItem('usuarioLogado');
   if (usuario) {
     this.usuarioLogado = JSON.parse(usuario);
+    this.userImageUrl = this.usuarioLogado.userImageUrl || 'https://via.placeholder.com/150';
   }
 
   // Aplicar o tema salvo

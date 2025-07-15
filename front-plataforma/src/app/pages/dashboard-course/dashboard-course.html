@@ -1,6 +1,12 @@
-<app-dashboard-header></app-dashboard-header>
+
 
 <main class="container mx-auto p-6">
+
+
+<div class="w-full h-40 md:h-56 overflow-hidden mb-8">
+    <img [src]="currentBannerImage" alt="Banner do Perfil" class="w-full h-full object-cover" />
+  </div>
+
   <div class="video-list">
     <h1 class="text-3xl font-bold mb-6 text-center text-blue-800 dark:text-blue-300">
       {{ tible }} - {{ todayDate | date:"mediumDate" }}

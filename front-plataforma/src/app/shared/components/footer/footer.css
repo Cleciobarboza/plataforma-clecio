@@ -1,4 +1,4 @@
-footer {
+css  footer {
   background-color: #041441; /* bg-blue-950 */
   color: white;
   padding-top: 2rem;
@@ -86,4 +86,3 @@ footer .apps {
   justify-content: center;
   margin-top: 1rem;
 }
-

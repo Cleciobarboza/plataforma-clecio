@@ -19,6 +19,11 @@ module.exports = {
           50: '#6b21a8',
           100: '#4338ca'
         },
+         'bg-vinho': {
+          DEFAULT: '#59253C', // Cor principal do vinho BTG (pode ser usada como bg-btg-wine)
+          light: '#783A55', // Um tom mais claro se precisar para algum detalhe
+          dark: '#3A1828',  // Um tom mais escuro para o background do dark mode
+        },
         'primary': '#18205e',
         'secondary': '#2ecc71',
         'tertiary': '#f1c40f',

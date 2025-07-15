@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { PageNaoImplementada } from '../../shared/components/page-nao-implementada/page-nao-implementada';
 import { FooterComponent } from '../../shared/components/footer/footer';
-import { HeaderComponent } from '../../shared/components/header/header';
+import { HeaderToSign } from '../../shared/components/header-to-sign/header-to-sign';
+
+
 
 @Component({
   selector: 'app-to-sign',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, PageNaoImplementada, FooterComponent],
+  imports: [CommonModule, FooterComponent, HeaderToSign],
   templateUrl: './to-sign.html',
   styleUrls: ['./to-sign.css'] // <- aqui corrigido
 })

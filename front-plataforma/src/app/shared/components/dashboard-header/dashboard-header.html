@@ -1,4 +1,4 @@
-<header class="bg-gray-900 dark:bg-purple-700 text-white px-6 py-3 shadow-md flex justify-between items-center h-16 relative">
+<header class="bg-gray-900 dark:bg-green-950 text-white px-6 py-3 shadow-md flex justify-between items-center h-16 relative">
   <div class="flex items-center gap-3">
     <button (click)="toggleSidebar()" class="focus:outline-none">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -26,7 +26,7 @@
     <!-- Usuário -->
     <div class="relative">
       <button (click)="toggleMenu()" class="flex items-center gap-2 text-sm font-medium hover:underline focus:outline-none">
-        <img src="/src/app/assets/profissional/foto-perfil-clecio.png" alt="Foto do Usuário" class="w-8 h-8 rounded-full border-2 border-white">
+      <img [src]="userImageUrl || 'https://via.placeholder.com/150'" alt="Foto do Usuário" class="w-8 h-8 rounded-full border-2 border-white">
         <span>{{ usuarioLogado?.name || 'Usuário' }}</span>
       </button>
 

@@ -1,17 +1,18 @@
-// src/app/shared/components/course-card/course-card.ts
+// src/app/shared/components/free-cards/free-cards.ts
 
-import { Component, Input, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common'; // Import isPlatformBrowser
-import { Router } from '@angular/router'; // Only Router is needed for navigation
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
-  selector: 'app-course-card',
+  selector: 'app-free-cards',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './course-card.html',
-  styleUrls: ['./course-card.css']
+  templateUrl: './free-cards.html',
+  styleUrl: './free-cards.css'
 })
-export class CourseCard implements OnInit {
+export class FreeCards implements OnInit {
   @Input() title: string = '';
   @Input() image: string = '';
   @Input() courseId: string = ''; // This Input property receives the course ID from the parent
@@ -46,7 +47,7 @@ export class CourseCard implements OnInit {
 
   // Getter to determine if the course is accessible based on user status
   get isAccessible(): boolean {
-    return this.usuarioStatus === 'ativo';
+    return this.usuarioStatus !== 'cancelado';
   }
 
  acessarCurso(): void {

@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer';
 
+
 @Component({
   selector: 'app-my-profile',
   standalone: true,
@@ -16,6 +17,7 @@ export class MyProfile implements OnInit {
   form!: FormGroup;
   userImageUrl: string | null = null;
   modoEdicao: boolean = false;
+  currentBannerImage: string = '../../assets/userbaner/roxo.jpg'; // Valor padrão
 
   constructor(private fb: FormBuilder) {}
 
@@ -25,8 +27,8 @@ export class MyProfile implements OnInit {
     this.usuario = usuario;
 
     this.form = this.fb.group({
-        first_name: [''],  // <- corrigido aqui
-        surname: [''],     // <- de "Surname" para "surname"
+        first_name: [''],
+        surname: [''],
         name: [
         usuario.name || '',
         [
@@ -63,55 +65,56 @@ export class MyProfile implements OnInit {
       description: [''],
       completeRegistration: [true]
     });
+
+    // Call this method to load the user's theme and update the banner on init
+    this.loadUserThemeAndBanner();
   }
 
-salvar(): void {
-  const formValue = this.form.value;
+  salvar(): void {
+    const formValue = this.form.value;
 
-  if (this.modoEdicao) {
-    // Valida senha atual
-    if (formValue.oldPassword !== this.usuario.password) {
-      alert('❌ Senha atual incorreta');
-      return;
+    if (this.modoEdicao) {
+      // Valida senha atual
+      if (formValue.oldPassword !== this.usuario.password) {
+        alert('❌ Senha atual incorreta');
+        return;
+      }
+
+      // Valida nova senha
+      const senhaRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      if (!senhaRegex.test(formValue.newPassword)) {
+        alert('❌ Nova senha inválida: mínimo 8 caracteres, uma maiúscula e um símbolo.');
+        return;
+      }
+
+      if (formValue.newPassword !== formValue.confirmPassword) {
+        alert('❌ Confirmação de senha não confere.');
+        return;
+      }
+
+      // Atualiza nome e senha no objeto do usuário
+      this.usuario.name = formValue.name;
+      this.usuario.password = formValue.newPassword;
+
+      // Atualiza também no array de usuários salvos
+      const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+      const indice = usuarios.findIndex((u: any) => u.email === this.usuario.email);
+      if (indice !== -1) {
+        usuarios[indice].name = this.usuario.name;
+        usuarios[indice].password = this.usuario.password;
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      }
+
+      // Atualiza o objeto logado
+      localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
+
+      // Atualiza o campo password no formulário
+      this.form.get('password')?.setValue(formValue.newPassword);
+
+      alert('✅ Nome e senha atualizados com sucesso!');
+      this.modoEdicao = false;
     }
-
-    // Valida nova senha
-    const senhaRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
-    if (!senhaRegex.test(formValue.newPassword)) {
-      alert('❌ Nova senha inválida: mínimo 8 caracteres, uma maiúscula e um símbolo.');
-      return;
-    }
-
-    if (formValue.newPassword !== formValue.confirmPassword) {
-      alert('❌ Confirmação de senha não confere.');
-      return;
-    }
-
-    // Atualiza nome e senha no objeto do usuário
-    this.usuario.name = formValue.name;
-    this.usuario.password = formValue.newPassword;
-
-    // Atualiza também no array de usuários salvos
-    const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-    const indice = usuarios.findIndex((u: any) => u.email === this.usuario.email);
-    if (indice !== -1) {
-      usuarios[indice].name = this.usuario.name;
-      usuarios[indice].password = this.usuario.password;
-      localStorage.setItem('usuarios', JSON.stringify(usuarios)); // CORRETO AQUI
-    }
-
-    // Atualiza o objeto logado
-    localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
-
-    // Atualiza o campo password no formulário
-    this.form.get('password')?.setValue(formValue.newPassword);
-
-    alert('✅ Nome e senha atualizados com sucesso!');
-    this.modoEdicao = false;
   }
-}
-
-
 
 
   onImageSelected(event: Event): void {
@@ -120,41 +123,77 @@ salvar(): void {
       const reader = new FileReader();
       reader.onload = () => {
         this.userImageUrl = reader.result as string;
-        // Você pode salvar a imagem aqui se quiser
+        // Salve a URL da imagem no objeto usuario e no localStorage
+        this.usuario.userImageUrl = this.userImageUrl;
+        localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
+        // Opcional: Atualize o array 'usuarios' também, se aplicável
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        const indice = usuarios.findIndex((u: any) => u.email === this.usuario.email);
+        if (indice !== -1) {
+          usuarios[indice].userImageUrl = this.userImageUrl;
+          localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        }
+        alert('✅ Foto de perfil atualizada!');
       };
       reader.readAsDataURL(file);
     }
   }
-salvarInformacoesPessoais(): void {
-  const dadosForm = this.form.value;
 
-  // Corrigido o nome do campo
-  const firstName = dadosForm.first_name?.trim() || '';
-  const surname = dadosForm.surname?.trim() || '';
-  const fullName = `${firstName} ${surname}`.trim();
+  salvarInformacoesPessoais(): void {
+    const dadosForm = this.form.value;
 
-  // Atualiza os campos no objeto usuario
-  const camposAdicionais = [
-    'first_name', 'surname', 'gender', 'birthDate',
-    'profession', 'education', 'phone', 'country',
-    'city', 'state', 'description'
-  ];
+    // Corrigido o nome do campo
+    const firstName = dadosForm.first_name?.trim() || '';
+    const surname = dadosForm.surname?.trim() || '';
+    const fullName = `${firstName} ${surname}`.trim();
 
-  camposAdicionais.forEach((campo) => {
-    this.usuario[campo] = dadosForm[campo];
-  });
+    // Atualiza os campos no objeto usuario
+    const camposAdicionais = [
+      'first_name', 'surname', 'gender', 'birthDate',
+      'profession', 'education', 'phone', 'country',
+      'city', 'state', 'description'
+    ];
 
-  // Atualiza também o nome completo
-  this.usuario.full_name = fullName;
-  this.form.get('full_name')?.setValue(fullName);
+    camposAdicionais.forEach((campo) => {
+      this.usuario[campo] = dadosForm[campo];
+    });
 
-  // Salva no localStorage
-  localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
+    // Atualiza também o nome completo
+    this.usuario.full_name = fullName;
+    this.form.get('full_name')?.setValue(fullName);
 
-  alert('✅ Informações pessoais atualizadas com sucesso!');
+    // Salva no localStorage
+    localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
+
+    alert('✅ Informações pessoais atualizadas com sucesso!');
+  }
+
+  // Métodos para carregar e atualizar o banner, movidos para dentro da classe
+  loadUserThemeAndBanner(): void {
+    const savedTheme = localStorage.getItem('userTheme');
+    if (savedTheme) {
+      this.updateBannerImage(savedTheme);
+    } else {
+      this.updateBannerImage('roxo'); // Default if no theme saved
+    }
+  }
+
+  updateBannerImage(theme: string): void {
+    switch (theme) {
+      case 'roxo':
+        this.currentBannerImage = '../../assets/userbaner/roxo.jpg';
+        break;
+      case 'azul':
+        this.currentBannerImage = '../../assets/userbaner/azul.jpg';
+        break;
+      case 'rosa':
+        this.currentBannerImage = '../../assets/userbaner/rosa.jpg';
+        break;
+      case 'vermelho':
+        this.currentBannerImage = '../../assets/userbaner/vermelho.jpg';
+        break;
+      default:
+        this.currentBannerImage = '../../assets/userbaner/roxo.jpg'; // Fallback
+    }
+  }
 }
-
-
-}
-
-

@@ -1,0 +1,10 @@
+/* Exemplos de CSS PROBLEMÁTICO A SEREM REMOVIDOS OU CORRIGIDOS */
+.course-card {
+    margin: -10px; /* ISSO CAUSARIA SOBREPOSIÇÃO */
+    position: relative; /* OK, mas se tiver 'left: -5px;' também seria um problema */
+    /* ... */
+}
+
+.course-card .content {
+    /* ... */
+}

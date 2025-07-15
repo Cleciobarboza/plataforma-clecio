@@ -1,0 +1,3 @@
+.course-card .content {
+  padding: 1.5rem; /* Isso é padding INTERNO do card */
+}
