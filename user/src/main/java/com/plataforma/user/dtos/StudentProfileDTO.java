@@ -19,4 +19,19 @@ public record StudentProfileDTO(
     LocalDate startdate,//implementar data e inicio da conta
     String status,
     boolean completeRegistration
-) {}
+) {
+
+    public String user_name() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'user_name'");
+    }
+
+    public String email() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'email'");
+    }
+
+    public String password() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'password'");
+    }}

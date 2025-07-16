@@ -25,7 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Student implements Serializable{
+public class StudentModel implements Serializable{
   private static final long serialVersionUID = 1L;
 
     @Id
@@ -88,3 +88,6 @@ public class Student implements Serializable{
 
     private boolean completeRegistration = false;
 }
+
+
+

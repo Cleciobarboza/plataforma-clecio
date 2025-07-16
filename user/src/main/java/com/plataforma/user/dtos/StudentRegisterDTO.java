@@ -1,7 +1,9 @@
+package com.plataforma.user.dtos;
+
 public record StudentRegisterDTO(String user_name, String email, String password) {
     public StudentRegisterDTO {
         if (user_name == null || user_name.isBlank()) {
-            throw new IllegalArgumentException("Firstname cannot be null or blank");
+            throw new IllegalArgumentException("Username cannot be null or blank");
         }
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email cannot be null or blank");
@@ -11,4 +13,3 @@ public record StudentRegisterDTO(String user_name, String email, String password
         }
     }
 }
-

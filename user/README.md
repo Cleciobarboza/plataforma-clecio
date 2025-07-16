@@ -39,6 +39,7 @@ Download the file and create a ".env" file and put all your database data.
 │ email (UNIQUE)       │
 │ password             │
 │ birth_date           │
+│ startdate            │
 │ gender               │
 │ phone                │
 │ profession           │
@@ -46,6 +47,7 @@ Download the file and create a ".env" file and put all your database data.
 │ description          │
 │ country              │
 │ city                 │
+│ status               │
 │ state                │
 │ completeRegistration │
 └──────────────────────┘
@@ -69,10 +71,14 @@ Download the file and create a ".env" file and put all your database data.
 | `country`              | String    | -                | País                           |
 | `city`                 | String    | -                | Cidade                         |
 | `state`                | String    | -                | Estado (UF)                    |
+| `startDate`            | LocalDate | -                | Data de Inicio de conta        |
+| `birthDate`            | LocalDate | -                | Data de nascimento             |
+| `stauts`               | String    | -                | Inicia como Pendente           |
 | `description`          | String    | -                | Decrição do Usuário            |
 | `completeRegistration` | boolean   | default: false   | Se completou os dados pessoais |
 
 # Exemplo de requisição/resposta(futuro)
+
 
 
 
