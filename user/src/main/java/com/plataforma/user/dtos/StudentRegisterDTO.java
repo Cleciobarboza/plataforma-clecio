@@ -1,15 +1,19 @@
 package com.plataforma.user.dtos;
 
-public record StudentRegisterDTO(String user_name, String email, String password) {
-    public StudentRegisterDTO {
-        if (user_name == null || user_name.isBlank()) {
-            throw new IllegalArgumentException("Username cannot be null or blank");
-        }
-        if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Email cannot be null or blank");
-        }
-        if (password == null || password.isBlank()) {
-            throw new IllegalArgumentException("Password cannot be null or blank");
-        }
-    }
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
+public class StudentRegisterDTO {
+
+    @NotBlank(message = "Username cannot be blank")
+    private String user_name;
+
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email cannot be blank")
+    private String email;
+
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
 }

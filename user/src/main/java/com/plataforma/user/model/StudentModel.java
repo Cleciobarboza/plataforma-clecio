@@ -77,16 +77,19 @@ public class StudentModel implements Serializable{
     @Column(name ="startdate")
     private LocalDate startdate;
 
+    @Builder.Default
     @Column(name = "status")
-    private String status;
+    private String status = "pendente"; // valor default se não for setado no builder
     
     @Column(name = "description", length = 500)
     private String description;
 
 
 
-
+    @Builder.Default
     private boolean completeRegistration = false;
+
+    
 }
 
 

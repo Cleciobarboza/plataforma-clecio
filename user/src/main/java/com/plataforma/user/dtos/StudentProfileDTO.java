@@ -3,35 +3,26 @@ package com.plataforma.user.dtos;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
-public record StudentProfileDTO(
-    String full_name,
-    LocalDate birthDate,
-    String gender,
-    String profession,
-    String education,
-    String phone,
-    String country,
-    String city,
-    String state,
-    @Size(max = 500, message = "Description cannot exceed 500 characters")
-    String description,
-    LocalDate startdate,//implementar data e inicio da conta
-    String status,
-    boolean completeRegistration
-) {
+@Data
+public class StudentProfileDTO {
+    private String full_name;
+    private LocalDate birthDate;
+    private String gender;
+    private String profession;
+    private String education;
+    private String phone;
+    private String country;
+    private String city;
+    private String state;
 
-    public String user_name() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'user_name'");
-    }
+    @Size(max = 500)
+    private String description;
 
-    public String email() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'email'");
-    }
+    private LocalDate startdate;
+    private String status;
+    private boolean completeRegistration;
 
-    public String password() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'password'");
-    }}
+}
+
