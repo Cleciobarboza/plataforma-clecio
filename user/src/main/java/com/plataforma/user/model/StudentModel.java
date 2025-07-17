@@ -5,10 +5,15 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.plataforma.user.domain.dashboard_admin.model.RoleModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,25 +24,23 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "TB_student")
-@Setter
 @Getter
-@ToString
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
-public class StudentModel implements Serializable{
-  private static final long serialVersionUID = 1L;
+public class StudentModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id_user", nullable = false, updatable = false)
-    @Builder.Default
-    private UUID id_user = UUID.randomUUID();
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(name = "user_name", nullable = false)
     private String user_name;
 
-   
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -45,7 +48,11 @@ public class StudentModel implements Serializable{
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Supplementary data
+    // Novo relacionamento
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private RoleModel role;
+
     @Column(name = "full_name")
     private String full_name;
 
@@ -54,7 +61,6 @@ public class StudentModel implements Serializable{
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
 
     @Column(name = "phone")
     private String phone;
@@ -71,26 +77,19 @@ public class StudentModel implements Serializable{
     @Column(name = "profession")
     private String profession;
 
-    @Column(name = "education")  
+    @Column(name = "education")
     private String education;
 
-    @Column(name ="startdate")
+    @Column(name = "startdate")
     private LocalDate startdate;
 
     @Builder.Default
     @Column(name = "status")
-    private String status = "pendente"; // valor default se não for setado no builder
-    
+    private String status = "pendente";
+
     @Column(name = "description", length = 500)
     private String description;
 
-
-
     @Builder.Default
     private boolean completeRegistration = false;
-
-    
 }
-
-
-

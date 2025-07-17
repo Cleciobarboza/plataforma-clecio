@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plataforma.user.dtos.StudentLoginDTO;
 import com.plataforma.user.dtos.StudentProfileDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.model.StudentModel;
@@ -22,14 +23,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/auth")
 public class StudentController {
 
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
+        
     }
+// ✅ POST: logar
+    @PostMapping("/login")
+    public ResponseEntity<StudentModel> login(@RequestBody @Valid StudentLoginDTO dto) {
+    log.info("Usuário tentando login: {}", dto.getEmail());
+    return ResponseEntity.ok(studentService.login(dto));
+}
+
 
     // ✅ POST: cadastrar novo aluno
     @PostMapping("/register")
