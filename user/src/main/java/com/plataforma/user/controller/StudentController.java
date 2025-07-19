@@ -19,59 +19,54 @@ import com.plataforma.user.model.StudentModel;
 import com.plataforma.user.service.StudentService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor   // gera o construtor com o StudentService
 public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-        
-    }
-// ✅ POST: logar
+    // ✅ POST: login
     @PostMapping("/login")
     public ResponseEntity<StudentModel> login(@RequestBody @Valid StudentLoginDTO dto) {
-    log.info("Usuário tentando login: {}", dto.getEmail());
-    return ResponseEntity.ok(studentService.login(dto));
-}
+        log.info("Usuário tentando login: {}", dto.getEmail());
+        return ResponseEntity.ok(studentService.login(dto));
+    }
 
-
-    // ✅ POST: cadastrar novo aluno
+    // ✅ POST: cadastro
     @PostMapping("/register")
     public ResponseEntity<StudentModel> register(@RequestBody @Valid StudentRegisterDTO dto) {
-        log.info("Registrando novo estudante: {}", dto);
-        return ResponseEntity.ok(studentService.register(dto));
+        StudentModel saved = studentService.register(dto);
+        return ResponseEntity.ok(saved);
     }
 
-    // ✅ GET: buscar aluno por ID
+    // ✅ GET: buscar por ID
     @GetMapping("/find/{id}")
-    public ResponseEntity<StudentModel> findById(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
-        return ResponseEntity.of(studentService.getStudentRepository().findById(uuid));
+    public ResponseEntity<StudentModel> findById(@PathVariable UUID id) {
+        return ResponseEntity.of(studentService.getStudentRepository().findById(id));
     }
 
-    // ✅ PUT: atualizar perfil do aluno
+    // ✅ PUT: atualizar perfil
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateProfile(@PathVariable String id, @RequestBody @Valid StudentProfileDTO dto) {
-        studentService.updateProfile(id, dto);
+    public ResponseEntity<Void> updateProfile(@PathVariable UUID id,
+                                              @RequestBody @Valid StudentProfileDTO dto) {
+        studentService.updateProfile(id.toString(), dto);
         return ResponseEntity.ok().build();
     }
 
-    // ✅ DELETE: remover aluno por ID
+    // ✅ DELETE: remover aluno
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         var repo = studentService.getStudentRepository();
-        if (repo.existsById(uuid)) {
-            repo.deleteById(uuid);
+        if (repo.existsById(id)) {
+            repo.deleteById(id);
             log.info("Aluno deletado: {}", id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }

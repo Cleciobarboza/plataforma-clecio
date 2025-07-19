@@ -1,6 +1,7 @@
 package com.plataforma.user.service;
 
 
+import java.util.List;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.plataforma.user.domain.dashboard_admin.model.RoleModel;
+import com.plataforma.user.domain.dashboard_admin.repository.RoleRepository;
 import com.plataforma.user.dtos.StudentLoginDTO;
 import com.plataforma.user.dtos.StudentProfileDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
@@ -26,6 +29,7 @@ public class StudentService {
     private static final Logger log = LoggerFactory.getLogger(StudentService.class);
 
     private final StudentRepository studentRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     // ✅ LOGIN
@@ -47,17 +51,30 @@ public class StudentService {
 
     // ✅ REGISTER
     public StudentModel register(StudentRegisterDTO dto) {
-        StudentModel student = StudentModel.builder()
-            .user_name(dto.getUser_name())
-            .email(dto.getEmail())
-            .password(passwordEncoder.encode(dto.getPassword()))
-            .startdate(LocalDate.now())
-            .status("pendente")
-            .completeRegistration(false)
-            .build();
+        // Verifica se e-mail já existe
+        if (studentRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new RuntimeException("E-mail já cadastrado.");
+        }
 
-        return studentRepository.save(student);
-    }
+  
+
+    // Busca role padrão
+    RoleModel role = roleRepository.findByName("ROLE_USER")
+        .orElseThrow(() -> new RuntimeException("Role not found"));
+
+    // Cria aluno
+    StudentModel student = StudentModel.builder()
+        .user_name(dto.getUser_name())
+        .email(dto.getEmail())
+        .password(passwordEncoder.encode(dto.getPassword()))
+        .startdate(LocalDate.now())
+        .status("pendente")
+        .completeRegistration(false)
+        .roles(List.of(role))
+        .build();
+
+    return studentRepository.save(student);
+}
 
     // ✅ UPDATE PROFILE
     public void updateProfile(String id, StudentProfileDTO dto) {
@@ -84,7 +101,7 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    // ✅ Se ainda quiser expor o repositório
+    // ✅ GETTER para repositório (opcional, usado pelo controller)
     public StudentRepository getStudentRepository() {
         return this.studentRepository;
     }

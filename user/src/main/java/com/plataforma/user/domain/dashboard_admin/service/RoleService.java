@@ -1,6 +1,7 @@
 package com.plataforma.user.domain.dashboard_admin.service;
 
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,6 +18,21 @@ import lombok.RequiredArgsConstructor;
 public class RoleService {
 
     private final RoleRepository roleRepository;
+
+    public RoleModel getOrCreateUserRole() {
+        Optional<RoleModel> roleOpt = roleRepository.findByName("ROLE_USER");
+
+        if (roleOpt.isPresent()) {
+            return roleOpt.get();
+        }
+
+        RoleModel roleUser = RoleModel.builder()
+                .id(UUID.randomUUID())
+                .name("ROLE_USER")
+                .build();
+
+        return roleRepository.save(roleUser);
+    }
 
     public List<RoleModel> findAll() {
         return roleRepository.findAll();
