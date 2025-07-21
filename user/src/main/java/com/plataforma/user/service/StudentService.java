@@ -1,8 +1,7 @@
 package com.plataforma.user.service;
 
-
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,6 +18,7 @@ import com.plataforma.user.dtos.StudentProfileDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.model.StudentModel;
 import com.plataforma.user.repository.StudentRepository;
+import com.plataforma.user.security.jwt.LoginResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,23 +31,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    // ✅ LOGIN
-    public StudentModel login(StudentLoginDTO dto) {
-        Optional<StudentModel> studentOpt = studentRepository.findByEmail(dto.getEmail());
-
-        if (studentOpt.isEmpty()) {
-            throw new UsernameNotFoundException("Email não encontrado");
-        }
-
-        StudentModel student = studentOpt.get();
-
-        if (!passwordEncoder.matches(dto.getPassword(), student.getPassword())) {
-            throw new RuntimeException("Senha inválida");
-        }
-
-        return student;
-    }
+    private final JwtTokenService jwtTokenService;
 
     // ✅ REGISTER
     public StudentModel register(StudentRegisterDTO dto) {
@@ -56,25 +40,36 @@ public class StudentService {
             throw new RuntimeException("E-mail já cadastrado.");
         }
 
-  
+        // Busca role padrão
+        RoleModel role = roleRepository.findByName("ROLE_USER")
+            .orElseThrow(() -> new RuntimeException("Role not found"));
 
-    // Busca role padrão
-    RoleModel role = roleRepository.findByName("ROLE_USER")
-        .orElseThrow(() -> new RuntimeException("Role not found"));
+        // Cria aluno
+        StudentModel student = StudentModel.builder()
+            .userName(dto.getUserName())
+            .email(dto.getEmail())
+            .password(passwordEncoder.encode(dto.getPassword()))
+            .startdate(LocalDate.now())
+            .status("pendente")
+            .completeRegistration(false)
+            .roles(List.of(role))
+            .build();
 
-    // Cria aluno
-    StudentModel student = StudentModel.builder()
-        .user_name(dto.getUser_name())
-        .email(dto.getEmail())
-        .password(passwordEncoder.encode(dto.getPassword()))
-        .startdate(LocalDate.now())
-        .status("pendente")
-        .completeRegistration(false)
-        .roles(List.of(role))
-        .build();
+        return studentRepository.save(student);
+    }
 
-    return studentRepository.save(student);
-}
+    // ✅ LOGIN
+    public LoginResponse login(StudentLoginDTO dto) {
+        StudentModel user = studentRepository.findByEmail(dto.getEmail())
+            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Senha inválida");
+        }
+
+        String token = jwtTokenService.generateToken(user);
+        return new LoginResponse(token, user);
+    }
 
     // ✅ UPDATE PROFILE
     public void updateProfile(String id, StudentProfileDTO dto) {
@@ -101,7 +96,27 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    // ✅ GETTER para repositório (opcional, usado pelo controller)
+    // ✅ FIND BY ID
+    public Optional<StudentModel> findById(UUID id) {
+        return studentRepository.findById(id);
+    }
+
+    // ✅ DELETE
+    public boolean deleteStudent(UUID id) {
+        if (studentRepository.existsById(id)) {
+            studentRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    // ✅ FIND BY EMAIL
+    public StudentModel findByEmail(String email) {
+        return studentRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    }
+
+    // (Opcional) getter se necessário para controller
     public StudentRepository getStudentRepository() {
         return this.studentRepository;
     }

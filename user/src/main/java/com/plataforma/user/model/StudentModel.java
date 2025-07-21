@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,8 +47,8 @@ public class StudentModel implements  UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "user_name", nullable = false)
-    private String user_name;
+    @Column(name = "userName", nullable = false)
+  private String userName;  
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;

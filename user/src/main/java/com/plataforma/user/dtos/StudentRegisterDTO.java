@@ -8,7 +8,7 @@ import lombok.Data;
 public class StudentRegisterDTO {
 
     @NotBlank(message = "Username cannot be blank")
-    private String user_name;
+    private String userName;
 
     @Email(message = "Email must be valid")
     @NotBlank(message = "Email cannot be blank")
