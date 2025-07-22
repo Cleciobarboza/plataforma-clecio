@@ -1,4 +1,4 @@
-package com.plataforma.user.security.jwt;
+package com.plataforma.user.config.jwt;
 
 import java.io.IOException;
 

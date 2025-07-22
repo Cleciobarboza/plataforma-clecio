@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.plataforma.user.config.jwt.LoginResponse;
 import com.plataforma.user.domain.dashboard_admin.model.RoleModel;
 import com.plataforma.user.domain.dashboard_admin.repository.RoleRepository;
 import com.plataforma.user.dtos.StudentLoginDTO;
@@ -18,7 +19,6 @@ import com.plataforma.user.dtos.StudentProfileDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.model.StudentModel;
 import com.plataforma.user.repository.StudentRepository;
-import com.plataforma.user.security.jwt.LoginResponse;
 
 import lombok.RequiredArgsConstructor;
 

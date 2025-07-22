@@ -1,4 +1,4 @@
-package com.plataforma.user.security;
+package com.plataforma.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter; // Importe
 
-import com.plataforma.user.security.jwt.JwtAuthenticationFilter; // Importe o seu filtro JWT
+import com.plataforma.user.config.jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor; // Importe Lombok
 
@@ -37,7 +37,7 @@ public class SecurityConfig {
             // 4. Defina as regras de autorização para as requisições HTTP
             .authorizeHttpRequests(auth -> auth
                 // Permite requisições POST para /auth/login e /auth/register
-                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
                 // Exemplo de proteção por papel: apenas ADMIN pode acessar /dashboard_admin/**
                 .requestMatchers("/dashboard_admin/**").hasRole("ADMIN")
                 // Todas as outras requisições (que não são as permitidas acima) devem ser autenticadas

@@ -10,12 +10,9 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth-service/auth-service';
 
-interface Usuario {
-  name: string;
-  email: string;
-  password: string;
-}
+
 
 @Component({
   selector: 'app-auth',
@@ -25,19 +22,22 @@ interface Usuario {
   styleUrls: ['./auth.css']
 })
 export class Auth implements OnInit {
-
   loginError: string | null = null;
   form!: FormGroup;
   isLoginMode = true;
 
-  // 👁️ Visibilidade das senhas
   showPassword = false;
   showConfirmPassword = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
+
+  ngOnInit(): void {
+    this.setupForm();
+  }
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
@@ -47,36 +47,32 @@ export class Auth implements OnInit {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  ngOnInit(): void {
-    this.setupForm();
+  setupForm() {
+    const passwordValidators = [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/)
+    ];
+
+    if (this.isLoginMode) {
+      this.form = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', passwordValidators]
+      });
+    } else {
+      this.form = this.fb.group({
+        name: ['', [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.pattern(/^[^\s]+$/)
+        ]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', passwordValidators],
+        confirmPassword: ['']
+      }, { validators: this.passwordsMatchValidator });
+    }
   }
 
-setupForm() {
-  const passwordValidators = [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/)
-  ];
-
-  if (this.isLoginMode) {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', passwordValidators]
-    });
-  } else {
-    this.form = this.fb.group({
-      name: ['',[Validators.required,
-        Validators.maxLength(10),
-        Validators.pattern(/^[^\s]+$/)
-      ]], 
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', passwordValidators],
-      confirmPassword: ['']
-    }, { validators: this.passwordsMatchValidator });
-  }
-}
-
-  // 🔒 Validação: senha e confirmação iguais
   passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -94,62 +90,35 @@ setupForm() {
     this.isLoginMode = !this.isLoginMode;
     this.setupForm();
   }
+ onSubmit() {
+  if (this.form.invalid) return;
 
-  getUser(): Usuario[] {
-    const dados = localStorage.getItem('usuarios');
-    return dados ? JSON.parse(dados) : [];
-  }
-
-  salveUser(lista: Usuario[]): void {
-    localStorage.setItem('usuarios', JSON.stringify(lista));
-  }
-
-  onSubmit(): void {
-  if (this.form.invalid) {
-    console.log('Form is invalid', this.form.errors);
-    return;
-  }
-
-  const { name, email, password } = this.form.value;
-  const usuarios = this.getUser();
+  const user = this.form.value;
 
   if (this.isLoginMode) {
-   const usuario = usuarios.find(u => u.email === email);
-
-if (usuario && usuario.password === password) {
-  this.loginError = null;
-  localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-  this.router.navigate(['/dashboard']);
-} else {
-  this.loginError = 'E-mail ou senha incorretos!';
-  setTimeout(() => {
-    this.loginError = null;
-  }, 3000);
-}
-
- 
-    
+    // LOGIN
+    const { email, password } = user; 
+    this.authService.login({ email, password }).subscribe({
+      next: (res) => {
+        localStorage.setItem('user', JSON.stringify(res));
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.loginError = 'Email ou senha inválidos.';
+        console.error(err);
+      }
+    });
   } else {
-    const usuarioExistente = usuarios.some(u => u.email === email);
-    if (usuarioExistente) {
-      alert('Usuário já cadastrado');
-      return;
-    }
-
-    
-
-  const novoUsuario: Usuario = { name, email, password };
-
-// Remove possíveis registros antigos com mesmo email
-const listaFiltrada = usuarios.filter(u => u.email !== email);
-
-// Adiciona o novo e salva a lista atualizada (sem duplicatas)
-this.salveUser([...listaFiltrada, novoUsuario]);
-
-alert('Usuário cadastrado com sucesso!');
-this.toggleMode();
-this.form.reset();
-
-}
+    // REGISTER
+    this.authService.register(user).subscribe({
+      next: () => {
+        alert('Conta criada com sucesso!');
+        this.toggleMode(); // Volta para tela de login
+      },
+      error: (err) => {
+        console.error('Erro ao registrar:', err);
+      }
+    });
   }
+}
 }

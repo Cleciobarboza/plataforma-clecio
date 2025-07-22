@@ -1,4 +1,4 @@
-package com.plataforma.user.security.jwt;
+package com.plataforma.user.config.jwt;
 
 import com.plataforma.user.model.StudentModel;
 
