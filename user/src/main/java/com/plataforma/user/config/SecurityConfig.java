@@ -23,11 +23,9 @@ import lombok.RequiredArgsConstructor; // Importe Lombok
 @RequiredArgsConstructor // Adicione esta anotação se usar Lombok para injeção via construtor
 public class SecurityConfig {
 
-    // 1. Injete o seu JwtAuthenticationFilter
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-    // Remova o parâmetro de tipo <jwtAuthenticationFilter> aqui
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             // 2. Desabilite CSRF usando a sintaxe mais recente
@@ -38,30 +36,26 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Permite requisições POST para /auth/login e /auth/register
                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
-                // Exemplo de proteção por papel: apenas ADMIN pode acessar /dashboard_admin/**
+                .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
                 .requestMatchers("/dashboard_admin/**").hasRole("ADMIN")
-                // Todas as outras requisições (que não são as permitidas acima) devem ser autenticadas
                 .anyRequest().authenticated()
             )
-            // 5. Adicione o seu JwtAuthenticationFilter ANTES do filtro de autenticação padrão do Spring Security
-            // Isso garante que o token JWT seja processado primeiro.
+          
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            
 
         return http.build();
     }
 
-    // Bean para o AuthenticationManager, essencial para o processo de login
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // Bean para o PasswordEncoder, usado para codificar e verificar senhas
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // O UserDetailsService em memória foi corretamente comentado/removido.
-    // O Spring Security irá encontrar o seu StudentDetailsService (@Service) automaticamente.
+   
 }

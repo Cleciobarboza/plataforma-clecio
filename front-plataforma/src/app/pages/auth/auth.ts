@@ -109,11 +109,18 @@ export class Auth implements OnInit {
       }
     });
   } else {
-    // REGISTER
-    this.authService.register(user).subscribe({
+    // ✅ REGISTER (Correção aqui)
+    // Crie um novo objeto apenas com os dados necessários.
+    const payload = {
+      userName: user.name,
+      email: user.email,
+      password: user.password
+    };
+
+    this.authService.register(payload).subscribe({
       next: () => {
         alert('Conta criada com sucesso!');
-        this.toggleMode(); // Volta para tela de login
+        this.toggleMode();
       },
       error: (err) => {
         console.error('Erro ao registrar:', err);
