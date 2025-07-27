@@ -104,6 +104,10 @@ mvn spring-boot:run
 
 ## 🔐 Endpoints
 
+## swagger
+
+http://localhost:8080/swagger-ui/index.html#/
+
 ### Criar Usuário
 
 `POST http://localhost:8080/auth/register`

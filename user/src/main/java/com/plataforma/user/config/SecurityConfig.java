@@ -16,46 +16,43 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.plataforma.user.config.jwt.JwtAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor; // Importe Lombok
+import lombok.RequiredArgsConstructor; 
 
 @Configuration
-@EnableWebSecurity // Adicione esta anotação
-@RequiredArgsConstructor // Adicione esta anotação se usar Lombok para injeção via construtor
+@EnableWebSecurity 
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // 2. Desabilite CSRF usando a sintaxe mais recente
             .csrf(AbstractHttpConfigurer::disable)
-            // 3. Configure a política de gerenciamento de sessão como STATELESS para JWT
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // 4. Defina as regras de autorização para as requisições HTTP
             .authorizeHttpRequests(auth -> auth
-                // Permite requisições POST para /auth/login e /auth/register
                 .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
+                  .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                                 ).permitAll()
                 .requestMatchers("/dashboard_admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-          
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-            
 
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-   
 }

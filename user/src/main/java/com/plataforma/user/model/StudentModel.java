@@ -1,6 +1,6 @@
 package com.plataforma.user.model;
 
-
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -41,6 +41,7 @@ import lombok.ToString;
 @Builder
 public class StudentModel implements  UserDetails {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -95,6 +96,17 @@ public class StudentModel implements  UserDetails {
     private String description;
      @Builder.Default
     private boolean completeRegistration = false;
+
+    // --- NOVOS CAMPOS PARA IMAGEM E TEMA ---
+    // URL da imagem do usuário
+    @Column(name = "user_image_url", length = 500) 
+    private String userImageUrl;
+    // modo sibar ou modo claro ou escuro
+    @Column(name = "sidebarDisplayPreference", length = 50)
+    private String sidebarDisplayPreference;
+    // tema do usuário 
+    @Column(name = "user_theme", length = 50)
+    private String userTheme;
 
     // Métodos obrigatórios do UserDetails
     @ManyToMany(fetch = FetchType.EAGER)
