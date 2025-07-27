@@ -1,59 +1,118 @@
 # FrontPlataforma
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.4.
+Este projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli), versão 20.0.4.
 
-## Development server
+## ⚙️ Servidor de Desenvolvimento
 
-To start a local development server, run:
+Para iniciar o servidor local com proxy para o backend, execute:
 
 ```bash
 ng serve --proxy-config proxy.conf.json
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Depois, abra seu navegador e acesse `http://localhost:4200/`.
 
-## Code scaffolding
+O aplicativo será recarregado automaticamente sempre que você modificar qualquer arquivo de origem.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
+## 🧱 Estrutura do Projeto
+
+O projeto está organizado da seguinte forma:
+
+- `src/app/core`: configurações e serviços centrais
+- `src/app/layouts`: componentes de layout
+- `src/app/pages`: páginas da aplicação
+- `src/app/shared`: componentes reutilizáveis
+- `src/app/api`: cliente gerado via Orval (consome Swagger)
+
+---
+
+## 🚀 Geração de Código com Orval
+
+Este projeto utiliza o [Orval](https://orval.dev) para gerar automaticamente os serviços de API baseados no Swagger do backend (Spring Boot + OpenAPI).
+
+### Configuração
+
+A configuração está no arquivo:
+
+```ts
+orval.config.ts
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Gerar os serviços da API:
 
 ```bash
+npx orval
+```
+
+Isso irá criar os arquivos TypeScript com os endpoints, modelos e tipos no diretório configurado (ex: `src/app/api/generated`).
+
+---
+
+## 🛠️ Scaffolding (Geração de Código Angular)
+
+O Angular CLI possui ferramentas poderosas de scaffolding. Para gerar um novo componente:
+
+```bash
+ng generate component nome-do-componente
+```
+
+Outros comandos úteis:
+
+```bash
+ng generate service nome-do-serviço
+ng generate module nome-do-módulo
 ng generate --help
 ```
 
-## Building
+---
 
-To build the project run:
+## 🏗️ Build da Aplicação
+
+Para compilar o projeto para produção:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Os artefatos compilados serão armazenados no diretório `dist/`. O build de produção inclui otimizações automáticas para melhor desempenho.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🧪 Testes Unitários
+
+Para executar os testes unitários usando o [Karma](https://karma-runner.github.io):
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🧪 Testes de Integração (End-to-End)
+
+O Angular CLI permite configuração de testes e2e. Para executar:
 
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+⚠️ O framework de testes e2e não vem mais por padrão. Você pode configurar o [Cypress](https://www.cypress.io/) ou [Playwright](https://playwright.dev/) conforme sua necessidade.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📚 Recursos Adicionais
+
+- [Documentação oficial Angular](https://angular.dev)
+- [Referência de comandos Angular CLI](https://angular.dev/tools/cli)
+- [Orval - API client via Swagger/OpenAPI](https://orval.dev)
+
+---
+
+## 💡 Dicas
+
+- Use o arquivo `proxy.conf.json` para redirecionar requisições da API no ambiente de desenvolvimento.
+- O serviço de autenticação utiliza JWT e os tokens devem ser salvos e enviados nos headers Authorization (`Bearer <token>`).
+
+---
