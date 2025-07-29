@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/auth", produces = "application/json")
+@RequestMapping(value = "/auth", produces = "application/json")
 @RequiredArgsConstructor
 @Tag(name = "Auth Controller", description = "Endpoints for student authentication and management")
 public class StudentController {

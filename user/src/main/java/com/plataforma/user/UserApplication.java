@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 @OpenAPIDefinition(
     info = @io.swagger.v3.oas.annotations.info.Info(
-        title = "/api/auth",
+        title = "/auth",
         version = "1.0.0",
         description = "API for managing user accounts in the platform"
     )

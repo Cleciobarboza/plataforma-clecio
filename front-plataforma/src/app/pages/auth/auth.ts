@@ -11,8 +11,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth-service/auth-service';
-
-
+import { StudentRegisterDTO, StudentLoginDTO } from '../../api/generated/model';
 
 @Component({
   selector: 'app-auth',
@@ -47,7 +46,7 @@ export class Auth implements OnInit {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  setupForm() {
+  setupForm(): void {
     const passwordValidators = [
       Validators.required,
       Validators.minLength(8),
@@ -75,57 +74,77 @@ export class Auth implements OnInit {
 
   passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
+    const confirmPasswordControl = control.get('confirmPassword');
 
-    if (password && confirmPassword && password !== confirmPassword) {
-      control.get('confirmPassword')?.setErrors({ mismatch: true });
-    } else {
-      control.get('confirmPassword')?.setErrors(null);
+    if (confirmPasswordControl) {
+      const confirmPassword = confirmPasswordControl.value;
+      if (password && confirmPassword && password !== confirmPassword) {
+        confirmPasswordControl.setErrors({ mismatch: true });
+      } else {
+        const errors = confirmPasswordControl.errors;
+        if (errors && errors['mismatch']) {
+          delete errors['mismatch'];
+          if (Object.keys(errors).length === 0) {
+            confirmPasswordControl.setErrors(null);
+          } else {
+            confirmPasswordControl.setErrors(errors);
+          }
+        }
+      }
     }
 
     return null;
   }
 
-  toggleMode() {
+  toggleMode(): void {
     this.isLoginMode = !this.isLoginMode;
     this.setupForm();
   }
- onSubmit() {
-  if (this.form.invalid) return;
 
-  const user = this.form.value;
+  onSubmit(): void {
+    if (this.form.invalid) return;
 
-  if (this.isLoginMode) {
-    // LOGIN
-    const { email, password } = user; 
-    this.authService.login({ email, password }).subscribe({
-      next: (res) => {
-        localStorage.setItem('user', JSON.stringify(res));
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.loginError = 'Email ou senha inválidos.';
-        console.error(err);
-      }
-    });
-  } else {
-    // ✅ REGISTER (Correção aqui)
-    // Crie um novo objeto apenas com os dados necessários.
-    const payload = {
-      userName: user.name,
-      email: user.email,
-      password: user.password
-    };
+    const formValue = this.form.value;
 
-    this.authService.register(payload).subscribe({
-      next: () => {
-        alert('Conta criada com sucesso!');
-        this.toggleMode();
-      },
-      error: (err) => {
-        console.error('Erro ao registrar:', err);
-      }
-    });
+    if (this.isLoginMode) {
+      const payload: StudentLoginDTO = {
+        email: formValue.email,
+        password: formValue.password
+      };
+
+      this.authService.login(payload).subscribe({
+        next: (res) => {
+          if (res.token) {
+            this.authService.saveToken(res.token);
+          }
+
+          if (res.user) {
+            this.authService.saveUser(res.user);
+          }
+
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          this.loginError = 'Email ou senha inválidos.';
+          console.error(err);
+        }
+      });
+    } else {
+      const payload: StudentRegisterDTO = {
+        userName: formValue.name,
+        email: formValue.email,
+        password: formValue.password
+      };
+
+      this.authService.register(payload).subscribe({
+        next: () => {
+          alert('✅ Conta criada com sucesso!');
+          this.toggleMode(); // volta para o modo login
+        },
+        error: (err) => {
+          console.error('Erro ao registrar:', err);
+        }
+      });
+    }
   }
-}
 }

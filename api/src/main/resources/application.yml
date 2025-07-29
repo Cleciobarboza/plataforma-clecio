@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api
+
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: http://localhost:8081  # URL real do backend de autenticação
+          predicates:
+            - Path=/auth/**           # O frontend acessa via /auth/*
+          filters:
+            
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':                    # CORS para todas as rotas
+            allowedOrigins: "http://localhost:4200"  # Frontend permitido
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
