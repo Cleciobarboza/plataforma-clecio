@@ -100,6 +100,12 @@ export class AuthService {
     );
   }
 
+  deleteAccount(id: string): Observable<void> {
+    return this.apiAuthService._delete(id, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
   saveToken(token: string) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('token', token);

@@ -16,15 +16,10 @@ export interface StudentProfileDTO {
   country?: string;
   city?: string;
   state?: string;
-  userImageUrl?: string;
-  userTheme?: string;
-  sidebarDisplayPreference?: string;
   /**
    * @minLength 0
    * @maxLength 500
    */
   description?: string;
-  startdate?: string;
-  status?: string;
   completeRegistration?: boolean;
 }

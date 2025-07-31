@@ -49,7 +49,7 @@ public class StudentModel implements  UserDetails {
     private UUID id;
 
     @Column(name = "userName", nullable = false)
-  private String userName;  
+    private String userName;  
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -102,8 +102,8 @@ public class StudentModel implements  UserDetails {
     @Column(name = "user_image_url", length = 500) 
     private String userImageUrl;
     // modo sibar ou modo claro ou escuro
-    @Column(name = "sidebarDisplayPreference", length = 50)
-    private String sidebarDisplayPreference;
+    @Column(name = "banner_color", length = 50)
+    private String bannerColor;
     // tema do usuário 
     @Column(name = "user_theme", length = 50)
     private String userTheme;
@@ -152,6 +152,16 @@ public class StudentModel implements  UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUserName() {
+    
+        return this.userName;
+    }
+
+    public LocalDate getStartDate() {
+      
+        return this.startdate;
     }
 
 

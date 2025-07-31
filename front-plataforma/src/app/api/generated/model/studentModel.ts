@@ -26,8 +26,9 @@ export interface StudentModel {
   description?: string;
   completeRegistration?: boolean;
   userImageUrl?: string;
-  sidebarDisplayPreference?: string;
+  bannerColor?: string;
   userTheme?: string;
   roles?: RoleModel[];
   authorities?: GrantedAuthority[];
+  startDate?: string;
 }

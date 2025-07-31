@@ -66,7 +66,7 @@ export class MyProfile implements OnInit {
       completeRegistration: [true]
     });
 
-    // Call this method to load the user's theme and update the banner on init
+    // no backend é bannerColor  guarda o url da imagem do banner
     this.loadUserThemeAndBanner();
   }
 
@@ -162,7 +162,7 @@ export class MyProfile implements OnInit {
     this.usuario.full_name = fullName;
     this.form.get('full_name')?.setValue(fullName);
 
-    // Salva no localStorage
+    // Salva no localStorage    
     localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
 
     alert('✅ Informações pessoais atualizadas com sucesso!');

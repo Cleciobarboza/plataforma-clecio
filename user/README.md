@@ -110,7 +110,7 @@ http://localhost:8080/swagger-ui/index.html#/
 
 ### Criar Usuário
 
-`POST http://localhost:8080/auth/register`
+`POST http://localhost:8081/auth/register`
 
 ```json
 {
@@ -144,7 +144,7 @@ http://localhost:8080/swagger-ui/index.html#/
 
 ### Login
 
-`POST http://localhost:8080/auth/login`
+`POST http://localhost:8081/auth/login`
 
 ```json
 {
@@ -197,7 +197,7 @@ http://localhost:8080/swagger-ui/index.html#/
 
 ### Buscar Dados do Usuário
 
-`GET http://localhost:8080/auth/me`
+`GET http://localhost:8081/auth/me`
 
 ```json
 {
@@ -248,7 +248,7 @@ Authorization: Bearer <jwt_token>
 
 ### Atualizar Dados do Usuário
 
-`PUT http://localhost:8080/update/id`
+`PUT http://localhost:8081/update/id`
 
 ```json
 {
@@ -281,7 +281,7 @@ Authorization: Bearer <jwt_token>
 
 
 
-`DELETE http://localhost:8080/delete/id`
+`DELETE http://localhost:8081/delete/id`
 
 
 Header:
@@ -300,5 +300,5 @@ Authorization: Bearer <jwt_token>
 
 ---
 
-##  📚 Para mais referências técnicas, veja [HELP.md](./HELP.md)  s
+##  📚 Para mais referências técnicas, veja [HELP.md](./HELP.md)  
 

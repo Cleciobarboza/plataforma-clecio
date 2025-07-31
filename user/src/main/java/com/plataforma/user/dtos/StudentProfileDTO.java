@@ -16,16 +16,13 @@ public class StudentProfileDTO {
     private String country;
     private String city;
     private String state;
-    private String userImageUrl; 
-    private String userTheme;   
-    private String sidebarDisplayPreference;
 
+   
     
     @Size(max = 500)
     private String description;
 
-    private LocalDate startdate;
-    private String status;
+ 
     private boolean completeRegistration;
 
 }

@@ -122,7 +122,7 @@ export class Auth implements OnInit {
             this.authService.saveUser(res.user);
           }
 
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']); // redireciona para o dashboard após login
         },
         error: (err) => {
           this.loginError = 'Email ou senha inválidos.';

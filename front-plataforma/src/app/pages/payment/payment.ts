@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     DashboardHeader,
     FooterComponent,
     PageNaoImplementada,
-    ReactiveFormsModule // Adicione ReactiveFormsModule aqui
+    ReactiveFormsModule 
   ],
   templateUrl: './payment.html',
   styleUrl: './payment.css'
@@ -31,8 +31,6 @@ export class Payment implements OnInit { // Implemente OnInit
     const dadosUsuarioLogado = localStorage.getItem('usuarioLogado');
     this.usuario = dadosUsuarioLogado ? JSON.parse(dadosUsuarioLogado) : {};
 
-    // 2. Inicializar o formulário com o campo 'status'
-    // O valor inicial será o status que já existe no usuarioLogado, se houver
     this.form = this.fb.group({
       status: [this.usuario.status || '', Validators.required] // Adiciona Validators.required
     });

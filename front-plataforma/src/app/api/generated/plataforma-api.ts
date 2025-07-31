@@ -27,10 +27,13 @@ import {
 import type {
   LoginResponse,
   RoleModel,
+  StudentBasicInfoDTO,
   StudentLoginDTO,
   StudentModel,
+  StudentPreferenceUpdateDTO,
   StudentProfileDTO,
-  StudentRegisterDTO
+  StudentRegisterDTO,
+  StudentStatusDTO
 } from './model';
 
 type HttpClientOptions = {
@@ -75,6 +78,52 @@ export class AuthService {
     return this.http.put<TData>(
       `http://localhost:8080/auth/update/${id}`,
       studentProfileDTO,options
+    );
+  }
+
+/**
+ * Atualiza o status do aluno
+ * @summary Atualizar status do aluno
+ */
+ updateStatus<TData = void>(
+    id: string,
+    studentStatusDTO: StudentStatusDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    updateStatus<TData = void>(
+    id: string,
+    studentStatusDTO: StudentStatusDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    updateStatus<TData = void>(
+    id: string,
+    studentStatusDTO: StudentStatusDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;updateStatus<TData = void>(
+    id: string,
+    studentStatusDTO: StudentStatusDTO, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.put<TData>(
+      `http://localhost:8080/auth/status/${id}`,
+      studentStatusDTO,options
+    );
+  }
+
+/**
+ * Atualiza apenas as preferências visuais do aluno autenticado, como imagem de perfil, tema e exibição da sidebar.
+ * @summary Atualizar preferências do aluno
+ */
+ updatePreferences<TData = void>(
+    studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    updatePreferences<TData = void>(
+    studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    updatePreferences<TData = void>(
+    studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;updatePreferences<TData = void>(
+    studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.put<TData>(
+      `http://localhost:8080/auth/me/preferences`,
+      studentPreferenceUpdateDTO,options
     );
   }
 
@@ -193,6 +242,26 @@ export class AuthService {
     );
   }
 
+/**
+ * Retorna informações básicas do aluno, como nome e data de início
+ * @summary Obter informações básicas do aluno
+ */
+ getBasicInfo<TData = StudentBasicInfoDTO>(
+    studentId: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getBasicInfo<TData = StudentBasicInfoDTO>(
+    studentId: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getBasicInfo<TData = StudentBasicInfoDTO>(
+    studentId: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getBasicInfo<TData = StudentBasicInfoDTO>(
+    studentId: string, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/auth/basic-info/${studentId}`,options
+    );
+  }
+
  deleteRole<TData = void>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
@@ -232,11 +301,14 @@ export class AuthService {
 };
 
 export type UpdateProfileClientResult = NonNullable<void>
+export type UpdateStatusClientResult = NonNullable<void>
+export type UpdatePreferencesClientResult = NonNullable<void>
 export type GetAllRolesClientResult = NonNullable<RoleModel[]>
 export type CreateRoleClientResult = NonNullable<RoleModel>
 export type RegisterClientResult = NonNullable<StudentModel>
 export type LoginClientResult = NonNullable<LoginResponse>
 export type GetCurrentStudentClientResult = NonNullable<StudentModel>
 export type FindByIdClientResult = NonNullable<StudentModel>
+export type GetBasicInfoClientResult = NonNullable<StudentBasicInfoDTO>
 export type DeleteRoleClientResult = NonNullable<void>
 export type _DeleteClientResult = NonNullable<void>

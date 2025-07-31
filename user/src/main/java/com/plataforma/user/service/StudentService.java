@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.plataforma.user.config.jwt.LoginResponse;
 import com.plataforma.user.domain.dashboard_admin.model.RoleModel;
 import com.plataforma.user.domain.dashboard_admin.repository.RoleRepository;
+import com.plataforma.user.dtos.StudentBasicInfoDTO;
 import com.plataforma.user.dtos.StudentLoginDTO;
+import com.plataforma.user.dtos.StudentPreferenceUpdateDTO;
 import com.plataforma.user.dtos.StudentProfileDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.model.StudentModel;
@@ -81,7 +83,6 @@ public class StudentService {
 
         student.setFull_name(dto.getFull_name());
         student.setBirthDate(dto.getBirthDate());
-        student.setStartdate(dto.getStartdate());
         student.setGender(dto.getGender());
         student.setProfession(dto.getProfession());
         student.setEducation(dto.getEducation());
@@ -90,7 +91,6 @@ public class StudentService {
         student.setCity(dto.getCity());
         student.setState(dto.getState());
         student.setDescription(dto.getDescription());
-        student.setStatus(dto.getStatus());
         student.setCompleteRegistration(dto.isCompleteRegistration());
 
         studentRepository.save(student);
@@ -120,4 +120,37 @@ public class StudentService {
     public StudentRepository getStudentRepository() {
         return this.studentRepository;
     }
+
+    // Método para atualizar preferências do aluno
+public void updatePreferences(UUID userId, StudentPreferenceUpdateDTO dto) {
+    StudentModel student = studentRepository.findById(userId)
+        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+    student.setUserImageUrl(dto.getUserImageUrl());
+    student.setUserTheme(dto.getUserTheme());
+    student.setBannerColor(dto.getBannerColor());
+
+    studentRepository.save(student);
+}
+
+
+    // Método para atualizar status do aluno
+    public void updateStatus(UUID id, com.plataforma.user.dtos.StudentStatusDTO dto) {
+        StudentModel student = studentRepository.findById(id)
+            .orElseThrow(() -> new UsernameNotFoundException("Aluno não encontrado"));
+
+        student.setStatus(dto.getStatus());
+        studentRepository.save(student);
+    }
+
+    public StudentBasicInfoDTO getBasicInfo(UUID studentId) {
+    StudentModel student = studentRepository.findById(studentId)
+        .orElseThrow(() -> new UsernameNotFoundException("Aluno não encontrado"));
+
+     return new StudentBasicInfoDTO(student.getUserName(), student.getStartDate());
+}
+
+ 
+
+
 }
