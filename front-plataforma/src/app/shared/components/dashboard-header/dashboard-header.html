@@ -59,7 +59,8 @@
       <li><a (click)="irVideo()">Videos </a></li>
       <li><a (click)="irComplaint()">Reclamação</a></li>
       <li><a (click)="irPayment()">Pagamento</a></li>
-       <li><a (click)="irDelete()">Deletar Conta</a></li>
+       <li><a (click)="irDelete()">Deletar Conta</a></li>      
+      <li *ngIf="isAdmin"><a (click)="irAdmin()">Adminitrador</a></li>
     </ul>
   </aside>
 </div>

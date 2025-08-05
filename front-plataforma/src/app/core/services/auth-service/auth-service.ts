@@ -2,7 +2,6 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
 import { isPlatformBrowser } from "@angular/common";
-
 import { StudentModel } from "../../../api/generated/model/studentModel";
 import { StudentRegisterDTO } from "../../../api/generated/model/studentRegisterDTO";
 import { LoginResponse } from "../../../api/generated/model/loginResponse";
@@ -169,4 +168,29 @@ updateStudentPreferences(studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO)
 
     return headers;
   }
+
+  // Simulação de dados do usuário logado
+  private userRoles: string[] = ['USER', 'STUDENT']; // Exemplo: usuário comum
+
+ // Método para verificar se o usuário tem a role de administrador
+  isAdmin(): boolean {
+    const user = this.currentUser.value;
+    
+    // 1. Verifica se o usuário está logado
+    // 2. Verifica se o array 'roles' existe e não está vazio
+    if (user && user.roles && user.roles.length > 0) {
+      // 3. Itera sobre o array de roles para encontrar a role "ADMIN"
+      // Note que a sua RoleModel tem uma propriedade 'name'
+      return user.roles.some(role => role.name === 'ROLE_ADMIN');
+    }
+
+    // Retorna false se o usuário não está logado ou não tem a role
+    return false;
+  }
+
+  // Método para simular um login de admin (apenas para este exemplo)
+  loginAsAdmin() {
+    this.userRoles = ['ROLE_USER', 'ROLE_ADMIN'];
+  }
 }
+

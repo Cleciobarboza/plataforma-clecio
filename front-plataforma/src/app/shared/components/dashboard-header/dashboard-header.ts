@@ -18,6 +18,7 @@ export class DashboardHeader implements OnInit {
   menuAberto: boolean = false;
   sidebarAberta: boolean = false;
   userImageUrl: string | null = null;
+   isAdmin: boolean = false; 
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class DashboardHeader implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
     this.authService.getCurrentStudent().subscribe({
       next: (res) => {
         if (!res) {
@@ -113,6 +115,10 @@ export class DashboardHeader implements OnInit {
   irPayment(): void {
     this.sidebarAberta = false;
     this.router.navigate(['/payment']);
+  }
+  irAdmin(): void {
+    this.sidebarAberta = false;
+    this.router.navigate(['/admin-dashboard']);
   }
 
   irDelete(): void {

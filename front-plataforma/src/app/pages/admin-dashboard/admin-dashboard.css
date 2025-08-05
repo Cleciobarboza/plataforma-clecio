@@ -1,0 +1,47 @@
+/*
+  Arquivo de estilo para o componente AdminDashboardComponent.
+  A maioria dos estilos de layout e cor é gerenciada pelo Tailwind CSS no arquivo HTML.
+  Este CSS pode ser usado para customizações e regras específicas.
+*/
+
+main {
+  padding: 1.5rem;
+}
+
+/* Exemplo: Cores de texto em light mode */
+.text-gray-900 {
+  color: #1a202c;
+}
+
+/* Exemplo: Cores de fundo em dark mode */
+.dark .bg-gray-900 {
+  background-color: #111827;
+}
+
+/* Ícones dentro dos cards */
+span svg {
+  transition: color 0.2s ease-in-out;
+}
+
+/* Estilos para cada item da lista de atividades */
+ul.divide-y li {
+   padding-top: 0;
+}
+
+ul.divide-y li:first-child {
+  padding-top: 0;
+}
+
+ul.divide-y li:last-child {
+  padding-bottom: 0;
+}
+
+/* Adicionando um pouco mais de espaçamento ao passar o mouse */
+ul.divide-y li:hover {
+  background-color: #f7fafc; /* Cor de fundo suave no hover */
+  border-radius: 4px;
+}
+
+.dark ul.divide-y li:hover {
+  background-color: #1f2937; /* Cor de fundo suave no hover para o dark mode */
+}

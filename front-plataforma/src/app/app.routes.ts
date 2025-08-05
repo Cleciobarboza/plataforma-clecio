@@ -88,7 +88,12 @@ export const routes: Routes = [
   path: 'to-sign',
   loadComponent: () =>
     import('./pages/to-sign/to-sign').then(m => m.ToSign)
-}
+  },
+  {
+  path: 'admin-dashboard',
+  loadComponent: () =>
+    import('./pages/admin-dashboard/admin-dashboard').then(m => m.AdminDashboard)
+  }
 
 
 
