@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { Component, ElementRef, HostListener, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../../core/services/auth-service/auth-service";
-import { StudentBasicInfoDTO } from "../../../api/generated/model/studentBasicInfoDTO";
 import { UsuarioLogadoDTO } from "../../models/usuario-logado.dto";
 
 
@@ -29,10 +28,20 @@ export class DashboardHeader implements OnInit {
   ngOnInit(): void {
     this.authService.getCurrentStudent().subscribe({
       next: (res) => {
-       this.usuarioLogado = res; 
-       this.userImageUrl = res?.userImageUrl || 'https://via.placeholder.com/150';
-       this.aplicarTema((res?.userTheme as 'light' | 'dark' | null) ?? null); // <-- ajuste aqui
-    },
+        if (!res) {
+          // Trate o caso de usuário não autenticado ou erro
+          this.usuarioLogado = null;
+          this.userImageUrl = 'https://via.placeholder.com/150';
+          this.aplicarTema(null);
+          return;
+        }
+        this.usuarioLogado = {
+          ...res,
+          id: res.id ?? '' // Garante string
+        };
+        this.userImageUrl = this.usuarioLogado.userImageUrl || 'https://via.placeholder.com/150';
+        this.aplicarTema((this.usuarioLogado.userTheme as 'light' | 'dark' | null) ?? null);
+      },
       error: (err) => {
         console.error('Erro ao carregar dados do usuário:', err);
         // Redirecionar para login ou página de erro, se necessário

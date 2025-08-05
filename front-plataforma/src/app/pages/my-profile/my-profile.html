@@ -13,6 +13,10 @@
         class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300 " />
       <input type="file" (change)="onImageSelected($event)" class="absolute inset-0 opacity-0 cursor-pointer"
         title="Trocar foto de perfil" />
+            <button (click)="salvarFoto()"
+    class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition">
+    Salvar Foto
+  </button>
     </div>
   </div>
   <h2 class="text-2xl font-bold text-center">Editar Perfil</h2>
@@ -24,10 +28,17 @@
 
     <div class="form-group">
       <label for="name-input" class="dark:text-white dark:bg-gray- ">Usuário:</label>
-      <input id="name-input" formControlName="name" placeholder="Usuário"
+      <input id="name-input" formControlName="userName" placeholder="Usuário"
         class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
         [readonly]="!modoEdicao" />
     </div>
+
+      <div class="form-group">
+        <label for="email" class="dark:text-white">E-mail:</label>
+        <input id="email" formControlName="email" placeholder="E-mail"
+        class="p-2 border rounded dark:text-white dark:bg-gray-800" />
+      </div>
+
 
     <div class="form-group" *ngIf="modoEdicao">
       <label for="old-password" class="dark:text-white">Senha atual:</label>
@@ -77,6 +88,8 @@
           <input id="surname" formControlName="surname" placeholder="Sobrenome"
             class="p-2 border rounded dark:text-white dark:bg-gray-800" />
         </div>
+  
+
       </div>
 
       <div class="form-row">
@@ -186,12 +199,12 @@
       </select>
     </div>
 
-       <div class="form-group">
-          <label for="state" class="dark:text-white">UF:</label>
-          <select id="state" formControlName="state"
-            class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800"
-            [disabled]="!form.get('state')!.value">
-        class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <div class="form-group">
+  <label for="state" class="dark:text-white">UF:</label>
+  <select
+    id="state"
+    formControlName="state"
+    class="p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500 dark:text-white dark:bg-gray-800">
         <option value="">Selecione</option>
         <option value="AC">AC</option>
         <option value="AL">AL</option>

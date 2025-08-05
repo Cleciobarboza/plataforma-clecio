@@ -16,5 +16,6 @@ export * from './studentLoginDTO';
 export * from './studentModel';
 export * from './studentPreferenceUpdateDTO';
 export * from './studentProfileDTO';
+export * from './studentProfileUpdateDTO';
 export * from './studentRegisterDTO';
 export * from './studentStatusDTO';

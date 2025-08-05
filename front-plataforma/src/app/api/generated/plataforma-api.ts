@@ -32,6 +32,7 @@ import type {
   StudentModel,
   StudentPreferenceUpdateDTO,
   StudentProfileDTO,
+  StudentProfileUpdateDTO,
   StudentRegisterDTO,
   StudentStatusDTO
 } from './model';
@@ -223,6 +224,27 @@ export class AuthService {
   }
 
 /**
+ * Permite ao aluno atualizar seu userName, email ou senha
+ * @summary Atualizar dados do perfil do aluno logado
+ */
+ updateCurrentStudent<TData = void>(
+    studentProfileUpdateDTO: StudentProfileUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    updateCurrentStudent<TData = void>(
+    studentProfileUpdateDTO: StudentProfileUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    updateCurrentStudent<TData = void>(
+    studentProfileUpdateDTO: StudentProfileUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;updateCurrentStudent<TData = void>(
+    studentProfileUpdateDTO: StudentProfileUpdateDTO, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.patch<TData>(
+      `http://localhost:8080/auth/me`,
+      studentProfileUpdateDTO,options
+    );
+  }
+
+/**
  * Retorna os dados do aluno com o ID informado
  * @summary Buscar aluno por ID
  */
@@ -308,6 +330,7 @@ export type CreateRoleClientResult = NonNullable<RoleModel>
 export type RegisterClientResult = NonNullable<StudentModel>
 export type LoginClientResult = NonNullable<LoginResponse>
 export type GetCurrentStudentClientResult = NonNullable<StudentModel>
+export type UpdateCurrentStudentClientResult = NonNullable<void>
 export type FindByIdClientResult = NonNullable<StudentModel>
 export type GetBasicInfoClientResult = NonNullable<StudentBasicInfoDTO>
 export type DeleteRoleClientResult = NonNullable<void>

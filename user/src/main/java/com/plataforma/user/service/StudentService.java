@@ -18,6 +18,7 @@ import com.plataforma.user.dtos.StudentBasicInfoDTO;
 import com.plataforma.user.dtos.StudentLoginDTO;
 import com.plataforma.user.dtos.StudentPreferenceUpdateDTO;
 import com.plataforma.user.dtos.StudentProfileDTO;
+import com.plataforma.user.dtos.StudentProfileUpdateDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.model.StudentModel;
 import com.plataforma.user.repository.StudentRepository;
@@ -123,15 +124,26 @@ public class StudentService {
 
     // Método para atualizar preferências do aluno
 public void updatePreferences(UUID userId, StudentPreferenceUpdateDTO dto) {
-    StudentModel student = studentRepository.findById(userId)
-        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+    Optional<StudentModel> optionalStudent = studentRepository.findById(userId);
+    if (optionalStudent.isEmpty()) {
+        throw new UsernameNotFoundException("Usuário não encontrado");
+    }
 
-    student.setUserImageUrl(dto.getUserImageUrl());
-    student.setUserTheme(dto.getUserTheme());
-    student.setBannerColor(dto.getBannerColor());
+    StudentModel student = optionalStudent.get();
+
+    if (dto.getUserImageUrl() != null) {
+        student.setUserImageUrl(dto.getUserImageUrl());
+    }
+    if (dto.getUserTheme() != null) {
+        student.setUserTheme(dto.getUserTheme());
+    }
+    if (dto.getBannerColor() != null) {
+        student.setBannerColor(dto.getBannerColor());
+    }
 
     studentRepository.save(student);
 }
+
 
 
     // Método para atualizar status do aluno
@@ -150,7 +162,21 @@ public void updatePreferences(UUID userId, StudentPreferenceUpdateDTO dto) {
      return new StudentBasicInfoDTO(student.getUserName(), student.getStartDate());
 }
 
- 
+    public void updateProfile(UUID id, StudentProfileUpdateDTO dto) {
+    StudentModel student = studentRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
+         // Atualiza nome e email
+        student.setUserName(dto.getUserName());
+         student.setEmail(dto.getEmail());
+
+        if (dto.getNewPassword() != null && !dto.getNewPassword().isBlank()) {
+             if (!passwordEncoder.matches(dto.getOldPassword(), student.getPassword())) {
+              throw new RuntimeException("Senha atual incorreta");
+            }
+             student.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+            }
+             studentRepository.save(student);
+        }
 
 }

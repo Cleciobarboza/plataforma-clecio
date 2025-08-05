@@ -8,8 +8,11 @@ import { StudentRegisterDTO } from "../../../api/generated/model/studentRegister
 import { LoginResponse } from "../../../api/generated/model/loginResponse";
 import { StudentLoginDTO } from "../../../api/generated/model/studentLoginDTO";
 import { StudentProfileDTO } from "../../../api/generated/model/studentProfileDTO";
-import { HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService as ApiAuthService } from "../../../api/generated/plataforma-api";
+import { StudentProfileUpdateDTO } from "../../../api/generated/model/studentProfileUpdateDTO";
+import { StudentPreferenceUpdateDTO } from "../../../api/generated/model/studentPreferenceUpdateDTO";
+import { StudentStatusDTO } from "../../../api/generated/model/studentStatusDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,9 @@ export class AuthService {
 
   constructor(
     private apiAuthService: ApiAuthService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
+    
   ) {
     let initialUser: StudentModel | null = null;
 
@@ -106,6 +111,26 @@ export class AuthService {
     });
   }
 
+ updateProfile(studentProfileUpdateDTO: StudentProfileUpdateDTO): Observable<void> {
+  return this.apiAuthService.updateCurrentStudent(studentProfileUpdateDTO, {
+    headers: this.getAuthHeaders()
+  });
+}
+
+
+updateStudentPreferences(studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO): Observable<void> {
+  return this.apiAuthService.updatePreferences(studentPreferenceUpdateDTO, {
+    headers: this.getAuthHeaders()
+  });
+}
+
+
+   updateStatus(id: string, studentStatusDTO: StudentStatusDTO): Observable<void> {
+    return this.apiAuthService.updateStatus(id, studentStatusDTO, {
+      headers: this.getAuthHeaders()
+    });
+  }
+  
   saveToken(token: string) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('token', token);

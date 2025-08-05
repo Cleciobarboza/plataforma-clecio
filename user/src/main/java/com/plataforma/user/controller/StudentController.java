@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import com.plataforma.user.dtos.StudentBasicInfoDTO;
 import com.plataforma.user.dtos.StudentLoginDTO;
 import com.plataforma.user.dtos.StudentPreferenceUpdateDTO;
 import com.plataforma.user.dtos.StudentProfileDTO;
+import com.plataforma.user.dtos.StudentProfileUpdateDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.dtos.StudentStatusDTO;
 import com.plataforma.user.model.StudentModel;
@@ -117,6 +119,30 @@ public class StudentController {
         }
 
         return ResponseEntity.ok(student);
+    }
+    @Operation(
+    summary = "Atualizar dados do perfil do aluno logado",
+    description = "Permite ao aluno atualizar seu userName, email ou senha"
+    )
+    @ApiResponse(responseCode = "204", description = "Perfil atualizado com sucesso")
+    @PatchMapping("/me")
+    public ResponseEntity<Void> updateCurrentStudent(
+    @RequestBody @Valid StudentProfileUpdateDTO dto,
+    Authentication authentication) {
+
+    // Obter o email (ou id) do usuário autenticado
+    String email = authentication.getName(); // getName() retorna o username (você usa email como username)
+
+    // Buscar o aluno pelo email (ou diretamente via ID se usar UUID como username)
+    StudentModel student = studentService.findByEmail(email);
+    if (student == null) {
+        return ResponseEntity.status(404).build();
+    }
+
+    // Atualizar o perfil chamando o serviço
+    studentService.updateProfile(student.getId(), dto);
+
+    return ResponseEntity.noContent().build();
     }
 
     @Operation(

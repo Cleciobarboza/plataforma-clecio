@@ -1,67 +1,71 @@
-// src/app/pages/payment/payment.ts
-
-import { Component, OnInit } from '@angular/core'; // Importe OnInit
-import { DashboardHeader } from '../../shared/components/dashboard-header/dashboard-header';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DashboardHeader } from '../../shared/components/dashboard-header/dashboard-header';
 import { FooterComponent } from '../../shared/components/footer/footer';
 import { PageNaoImplementada } from '../../shared/components/page-nao-implementada/page-nao-implementada';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // Importe FormBuilder, ReactiveFormsModule, Validators
+
+import { StudentStatusDTO } from '../../api/generated/model/studentStatusDTO';
+import { StudentModel } from '../../api/generated/model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../core/services/auth-service/auth-service';
 
 @Component({
   selector: 'app-payment',
-  standalone: true, // Adicione standalone: true se este for um componente standalone
+  standalone: true,
   imports: [
     CommonModule,
     DashboardHeader,
     FooterComponent,
     PageNaoImplementada,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
   ],
   templateUrl: './payment.html',
-  styleUrl: './payment.css'
+  styleUrls: ['./payment.css'], // <-- Corrigido: styleUrl -> styleUrls
 })
-export class Payment implements OnInit { // Implemente OnInit
-  usuario: any; // Para armazenar o objeto usuarioLogado
-  form!: FormGroup; // Para o formulário reativo
+export class Payment implements OnInit {
+  form!: FormGroup;
+  usuarioLogado!: StudentModel;
 
-  constructor(private fb: FormBuilder) { } // Injete FormBuilder
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    // 1. Carregar os dados do usuário logado do localStorage
-    const dadosUsuarioLogado = localStorage.getItem('usuarioLogado');
-    this.usuario = dadosUsuarioLogado ? JSON.parse(dadosUsuarioLogado) : {};
+    this.authService.getCurrentStudent().subscribe((usuario) => {
+      if (!usuario || !usuario.id) {
+        alert('❌ Usuário não autenticado.');
+        return;
+      }
 
-    this.form = this.fb.group({
-      status: [this.usuario.status || '', Validators.required] // Adiciona Validators.required
+      this.usuarioLogado = usuario;
+
+      this.form = this.fb.group({
+        status: [usuario.status || 'pendente', Validators.required],
+      });
     });
   }
 
   salvarStatus(): void {
     if (this.form.invalid) {
       alert('Por favor, selecione um status válido.');
-      this.form.markAllAsTouched(); // Marca todos os campos como tocados para exibir erros
+      this.form.markAllAsTouched();
       return;
     }
 
-    const novoStatus = this.form.value.status;
+ const novoStatus: StudentStatusDTO = {
+  status: this.form.value.status
+};
 
-    // Garante que usuario está inicializado para não apagar outros dados
-    // Isso é importante para que os dados do my-profile sejam mantidos
-    // Se 'usuarioLogado' não existia ou estava vazio, criamos um objeto aqui
-    if (!this.usuario) {
-      this.usuario = {};
-    }
-
-    // 3. Adicionar ou atualizar APENAS o campo 'status'
-    this.usuario.status = novoStatus;
-
-    // 4. Salvar o objeto 'usuarioLogado' completo (com todos os dados) de volta no localStorage
-    localStorage.setItem('usuarioLogado', JSON.stringify(this.usuario));
-
-    alert(`✅ Status da assinatura atualizado para "${novoStatus}" com sucesso!`);
+this.authService.updateStatus(this.usuarioLogado.id!, novoStatus).subscribe({
+  next: () => {
+    alert(`✅ Status atualizado para "${novoStatus.status}" com sucesso!`);
+  },
+  error: (err: HttpErrorResponse) => {
+    console.error('Erro ao atualizar status:', err.message);
+    alert('❌ Erro ao atualizar status.');
+  },
+});
   }
-
-  // Remova a função 'salvarStatus' antiga (que foi colada do my-profile.ts)
-  // Pois ela continha lógica de atualização de outros campos que não são relevantes aqui.
-  // A função acima 'salvarStatus()' é a versão corrigida para esta página.
 }

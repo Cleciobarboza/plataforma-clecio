@@ -27,7 +27,7 @@
     <div class="relative">
       <button (click)="toggleMenu()" class="flex items-center gap-2 text-sm font-medium hover:underline focus:outline-none">
       <img [src]="userImageUrl || 'https://via.placeholder.com/150'" alt="Foto do Usuário" class="w-8 h-8 rounded-full border-2 border-white">
-        <span>{{ usuarioLogado?.userName || 'Usuário' }}</span>
+        <span>{{ usuarioLogado?.userName || '' }}</span>
       </button>
 
       <!-- Dropdown -->
