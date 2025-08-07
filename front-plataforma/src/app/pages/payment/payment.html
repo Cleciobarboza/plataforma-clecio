@@ -1,47 +1,46 @@
 <app-dashboard-header></app-dashboard-header>
 
-  <main class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white flex items-center justify-center">
-         <app-page-nao-implementada></app-page-nao-implementada>
-  <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full">
-    <h2 class="text-3xl font-bold mb-6 text-center text-indigo-600 dark:text-indigo-400">Status do Pagamento</h2>
+<main class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white flex items-center justify-center">
+  <div class="bg-white dark:bg-[#080d28] p-8 rounded-lg shadow-lg max-w-2xl w-full mx-4">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">Assinatura Anual</h2>
 
-    <form [formGroup]="form" (ngSubmit)="salvarStatus()">
-      <div class="mb-6">
-        <label for="status" class="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">Status da Assinatura:</label>
-        <select
-          id="status"
-          formControlName="status"
-          class="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-base bg-white dark:bg-gray-700 dark:text-white"
-        >
-          <option value="">Selecione um status</option>
-          <option value="ativo">Ativo</option>
-          <option value="inativo">Inativo</option>
-          <option value="pendente">Pendente</option>
-          <option value="cancelado">Cancelado</option>
-        </select>
-        <div *ngIf="form.get('status')?.invalid && form.get('status')?.touched" class="text-red-500 text-sm mt-1">
-          Por favor, selecione um status.
-        </div>
-      </div>
-
-      <button
-        type="submit"
-        [disabled]="form.invalid"
-        class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300 ease-in-out"
-        [ngClass]="{'opacity-50 cursor-not-allowed': form.invalid}"
-      >
-        Atualizar Status
-      </button>
-    </form>
-
-    <div class="mt-8 text-center text-gray-600 dark:text-gray-400">
-      <p>O status atual da sua assinatura é: 
-  <span class="font-semibold text-indigo-600 dark:text-indigo-400">
-    {{ usuarioLogado.status || 'Não definido' }}
-  </span>
-</p>
-
+    <div class="mb-8">
+      <p class="text-gray-600 dark:text-gray-300 text-center text-xl">
+        Acesso completo por 1 ano.
+      </p>
     </div>
+
+    <div class="payment-option border border-gray-300 dark:border-gray-700 p-6 rounded-lg mb-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a2139] transition-colors duration-200">
+      <label class="flex justify-between items-center w-full cursor-pointer">
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-1">Pagamento à Vista</h3>
+          <p class="text-sm text-green-600 dark:text-green-400 font-medium">25% de Desconto</p>
+        </div>
+        <div class="text-right">
+          <p class="text-2xl font-bold text-gray-800 dark:text-white mb-1">R$ 2.250,00</p>
+          <p class="text-sm text-gray-400 line-through">De R$ 3.000,00</p>
+        </div>
+      </label>
+    </div>
+
+    <div class="payment-option border border-gray-300 dark:border-gray-700 p-6 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-[#1a2139] transition-colors duration-200">
+      <label class="flex justify-between items-center w-full cursor-pointer">
+        <div>
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-1">Pagamento Parcelado</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Em até 12x de R$ 250,00</p>
+        </div>
+        <div class="text-right">
+          <p class="text-2xl font-bold text-gray-800 dark:text-white">R$ 3.000,00</p>
+        </div>
+      </label>
+    </div>
+
+    <div class="mt-6">
+      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200">
+        Continuar para o Pagamento
+      </button>
+    </div>
+
   </div>
 </main>
 

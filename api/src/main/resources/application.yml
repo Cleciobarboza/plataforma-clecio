@@ -11,8 +11,13 @@ spring:
         - id: user
           uri: http://localhost:8081  # URL real do backend de autenticação
           predicates:
-            - Path=/auth/**           # O frontend acessa via /auth/*
+            - Path=/auth/** # O frontend acessa via /auth/*
           filters:
+            
+        - id: payment
+          uri: http://localhost:8082  # URL of your payment backend
+          predicates:
+            - Path=/payments/** # The frontend will access via /payments/**
             
 
       globalcors:

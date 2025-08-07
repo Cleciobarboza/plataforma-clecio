@@ -7,18 +7,67 @@
   </div>
 
 
-  <div class="flex justify-center">
-    <div class="relative w-24 h-24">
-      <img [src]="userImageUrl || 'https://via.placeholder.com/100'" alt="Foto de perfil"
-        class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300 " />
-      <input type="file" (change)="onImageSelected($event)" class="absolute inset-0 opacity-0 cursor-pointer"
-        title="Trocar foto de perfil" />
-            <button (click)="salvarFoto()"
-    class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition">
+ <div class="flex flex-col items-center gap-3">
+  <div class="relative w-24 h-24 group">
+    <img
+      [src]="userImageUrl || 'https://via.placeholder.com/100'"
+      alt="Foto de perfil"
+      class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300"
+    />
+
+    <!-- Ícone de câmera no hover -->
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 10l4.553 2.276A1 1 0 0120 13v5a1 1 0 01-1 1h-5l-1 2H9l-1-2H3a1 1 0 01-1-1v-5a1 1 0 01.447-.724L7 10m8 0a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+    </div>
+
+    <!-- Input de imagem invisível -->
+    <input
+      type="file"
+      (change)="onImageSelected($event)"
+      class="absolute inset-0 opacity-0 cursor-pointer"
+      title="Trocar foto de perfil"
+      accept="image/*"
+    />
+  </div>
+
+  <!-- Botão salvar -->
+  <button
+    (click)="salvarFoto()"
+    class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-shadow shadow"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
     Salvar Foto
   </button>
-    </div>
-  </div>
+</div>
+
   <h2 class="text-2xl font-bold text-center">Editar Perfil</h2>
 
 <form [formGroup]="form" (ngSubmit)="salvar()" class="grid gap-4">

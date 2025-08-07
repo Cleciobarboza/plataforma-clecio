@@ -17,6 +17,7 @@ import { StudentStatusDTO } from "../../../api/generated/model/studentStatusDTO"
   providedIn: 'root'
 })
 export class AuthService {
+  private studentSubject = new BehaviorSubject<StudentModel | null>(null);
   public currentUser: BehaviorSubject<StudentModel | null>;
 
   constructor(
@@ -192,5 +193,13 @@ updateStudentPreferences(studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO)
   loginAsAdmin() {
     this.userRoles = ['ROLE_USER', 'ROLE_ADMIN'];
   }
+   public refreshStudentStatus(newStatus: 'pendente' | 'ativo'): void {
+    const currentStudent = this.studentSubject.getValue();
+    if (currentStudent) {
+      currentStudent.status = newStatus;
+      this.studentSubject.next(currentStudent); // Notifica os componentes sobre a mudança
+    }
+  }
+  
 }
 

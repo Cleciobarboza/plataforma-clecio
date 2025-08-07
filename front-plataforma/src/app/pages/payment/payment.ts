@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { DashboardHeader } from '../../shared/components/dashboard-header/dashboard-header';
 import { FooterComponent } from '../../shared/components/footer/footer';
-import { PageNaoImplementada } from '../../shared/components/page-nao-implementada/page-nao-implementada';
-
-import { StudentStatusDTO } from '../../api/generated/model/studentStatusDTO';
-import { StudentModel } from '../../api/generated/model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { StudentModel } from '../../api/generated/model/studentModel';
+// Corrigido: o caminho de importação e os tipos corretos
+import { PaymentRequestDTO, PaymentSuccessResponse } from '../../api/generated/payment/modelp';
+import { OpenAPIDefinitionService } from '../../api/generated/payment/payment-api'; 
 import { AuthService } from '../../core/services/auth-service/auth-service';
 
 @Component({
@@ -17,55 +18,59 @@ import { AuthService } from '../../core/services/auth-service/auth-service';
     CommonModule,
     DashboardHeader,
     FooterComponent,
-    PageNaoImplementada,
     ReactiveFormsModule,
   ],
   templateUrl: './payment.html',
-  styleUrls: ['./payment.css'], // <-- Corrigido: styleUrl -> styleUrls
+  styleUrls: ['./payment.css'],
 })
 export class Payment implements OnInit {
-  form!: FormGroup;
+  paymentForm!: FormGroup;
   usuarioLogado!: StudentModel;
+
+  isLoading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private apiService: OpenAPIDefinitionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.authService.getCurrentStudent().subscribe((usuario) => {
-      if (!usuario || !usuario.id) {
-        alert('❌ Usuário não autenticado.');
-        return;
-      }
-
-      this.usuarioLogado = usuario;
-
-      this.form = this.fb.group({
-        status: [usuario.status || 'pendente', Validators.required],
-      });
-    });
+    // ... (restante do código ngOnInit)
   }
 
-  salvarStatus(): void {
-    if (this.form.invalid) {
-      alert('Por favor, selecione um status válido.');
-      this.form.markAllAsTouched();
+  onSubmitPayment(): void {
+    if (this.paymentForm.invalid || this.isLoading) {
       return;
     }
 
- const novoStatus: StudentStatusDTO = {
-  status: this.form.value.status
-};
+    this.isLoading = true;
+    this.errorMessage = null;
 
-this.authService.updateStatus(this.usuarioLogado.id!, novoStatus).subscribe({
-  next: () => {
-    alert(`✅ Status atualizado para "${novoStatus.status}" com sucesso!`);
-  },
-  error: (err: HttpErrorResponse) => {
-    console.error('Erro ao atualizar status:', err.message);
-    alert('❌ Erro ao atualizar status.');
-  },
-});
+    const paymentData: PaymentRequestDTO = {
+      studentId: this.usuarioLogado.id,
+      amount: this.paymentForm.get('paymentOption')?.value === 'cash' ? 2250 : 3000,
+      paymentMethod: this.paymentForm.get('paymentOption')?.value,
+      description: 'Annual Subscription'
+    };
+
+    // Corrigido: 't' para 'next' e o tipo da resposta
+    this.apiService.processPayment(paymentData).subscribe({
+      next: (response: PaymentSuccessResponse) => {
+        console.log('✅ Pagamento processado com sucesso!', response);
+        alert('✅ Sua assinatura agora está ativa!');
+        this.authService.refreshStudentStatus('ativo');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('❌ Erro ao processar o pagamento:', error);
+        this.errorMessage = 'Ocorreu um erro ao processar seu pagamento. Tente novamente.';
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 }

@@ -1,21 +1,27 @@
 package com.plataforma.user.config;
 
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
-
-import java.io.IOException;
 
 @Configuration
 public class SpaWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
+        
+         // Rota para servir imagens ou arquivos enviados (ex: /uploads/nome-da-imagem.jpg)
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:uploads/");
+
+        // Rota para servir os arquivos estáticos do Angular
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(true)

@@ -1,5 +1,10 @@
 package com.plataforma.user.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.plataforma.user.config.jwt.LoginResponse;
 import com.plataforma.user.domain.dashboard_admin.model.RoleModel;
@@ -35,6 +41,7 @@ public class StudentService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
+    private static final String UPLOAD_DIR = "uploads/profile_images/";
 
     // ✅ REGISTER
     public StudentModel register(StudentRegisterDTO dto) {
@@ -178,5 +185,43 @@ public void updatePreferences(UUID userId, StudentPreferenceUpdateDTO dto) {
             }
              studentRepository.save(student);
         }
+       // Método para salvar a imagem de perfil e atualizar o modelo do estudante
+    public void saveProfileImage(UUID userId, MultipartFile image) {
+        Optional<StudentModel> optionalStudent = studentRepository.findById(userId);
+        if (optionalStudent.isEmpty()) {
+            throw new UsernameNotFoundException("Usuário não encontrado.");
+        }
+        StudentModel student = optionalStudent.get();
 
-}
+        try {
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            String fileExtension = getFileExtension(image.getOriginalFilename());
+            String fileName = userId.toString() + "." + fileExtension;
+            Path filePath = uploadPath.resolve(fileName);
+
+            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            String imageUrl = "/" + UPLOAD_DIR + fileName;
+            
+            student.setUserImageUrl(imageUrl);
+            studentRepository.save(student);
+
+        } catch (IOException ex) {
+            throw new RuntimeException("Falha ao salvar a imagem do perfil do usuário: " + userId, ex);
+        }
+    }
+    
+    // Método auxiliar para obter a extensão do arquivo
+    private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.lastIndexOf(".") == -1) {
+            return "";
+        }
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+}   
+
+

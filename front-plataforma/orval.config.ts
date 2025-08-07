@@ -1,16 +1,28 @@
-// orval.config.ts (or orval.config.js)
+// orval.config.ts
 import { defineConfig } from 'orval';
 
 export default defineConfig({
-  plataformaApi: {
-    input: 'http://localhost:8081/v3/api-docs', // This is where Orval fetches the API definition
+  // Configuração para o serviço de usuário
+  userApi: {
+    input: 'http://localhost:8081/v3/api-docs',
     output: {
-      target: './src/app/api/generated/plataforma-api.ts',
+      target: './src/app/api/generated/user/user-api.ts',
       client: 'angular',
-      schemas: './src/app/api/generated/model',
-      // --- ADD THIS LINE ---
-      baseUrl: 'http://localhost:8080', // <--- This is where the GENERATED CLIENT will send requests
-                                         // Orval will concatenate this with paths like /auth/register
+      schemas: './src/app/api/generated/user/model',
+      // Base URL para requisições do frontend
+      baseUrl: 'http://localhost:8080', 
+    },
+  },
+
+  // Configuração para o serviço de pagamento (NOVO)
+  paymentApi: {
+    input: 'http://localhost:8082/v3/api-docs',
+    output: {
+      target: './src/app/api/generated/payment/payment-api.ts',
+      client: 'angular',
+      schemas: './src/app/api/generated/payment/model',
+      // Base URL para requisições do frontend
+      baseUrl: 'http://localhost:8080', 
     },
   },
 });

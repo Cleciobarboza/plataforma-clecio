@@ -4,9 +4,8 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../shared/components/footer/footer';
 import { UsuarioLogadoDTO } from '../../shared/models/usuario-logado.dto';
-import { StudentPreferenceUpdateDTO, StudentProfileDTO, StudentProfileUpdateDTO } from '../../api/generated/model';
+import { StudentProfileDTO, StudentProfileUpdateDTO, UpdateProfileImageBody } from '../../api/generated/model';
 import { AuthService } from '../../core/services/auth-service/auth-service';
-import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -118,79 +117,57 @@ salvar(): void {
     });
   }
 }
+selectedImageFile: File | null = null;
 
+onImageSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    this.selectedImageFile = input.files[0];
 
- // Novo método para lidar com a seleção da imagem
-  onImageSelected(event: Event): void {
-    const element = event.target as HTMLInputElement;
-    if (element.files && element.files.length > 0) {
-      this.selectedFile = element.files[0];
-      
-      // Criar uma URL temporária para pré-visualização da imagem
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.userImageUrl = e.target.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
-    } else {
-      this.selectedFile = null;
-      // Usar o operador de navegação segura para evitar o erro
-      this.userImageUrl = this.usuarioLogado?.userImageUrl || null; 
-    }
+    // Exibe a imagem antes de enviar
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.userImageUrl = e.target.result;
+    };
+    reader.readAsDataURL(this.selectedImageFile);
   }
-
+}
   salvarFoto(): void {
-    if (!this.usuarioLogado?.id || !this.selectedFile) {
-      alert('❌ Nenhuma nova imagem selecionada para salvar.');
-      return;
-    }
-
-    // SIMULANDO UPLOAD - SUBSTITUA ESTA LÓGICA
-    // Em um cenário real, você faria o upload para um serviço e obteria a URL
-    // Por exemplo, usando um serviço de armazenamento como o Firebase Storage
-    // Aqui, vamos apenas simular que o upload foi bem-sucedido e obter uma URL mock
-    this.uploadImage(this.selectedFile).subscribe({
-      next: (imageUrl) => {
-        const dto: StudentPreferenceUpdateDTO = {
-          userImageUrl: imageUrl
-        };
-        
-        // Chamar o serviço para atualizar o perfil com a nova URL
-        this.authService.updateStudentPreferences(dto).subscribe({
-          next: () => {
-            alert('✅ Foto de perfil atualizada com sucesso!');
-            // Limpar o arquivo selecionado após o sucesso
-            this.selectedFile = null;
-          },
-          error: (err: HttpErrorResponse) => {
-            alert('❌ Erro ao atualizar a foto de perfil.');
-            console.error('Erro ao atualizar foto:', err);
-          },
-        });
-      },
-      error: (err) => {
-        alert('❌ Erro ao fazer o upload da imagem.');
-        console.error('Erro no upload:', err);
-      }
-    });
+  // CORREÇÃO: Altere selectedFile para selectedImageFile
+  if (!this.usuarioLogado?.id || !this.selectedImageFile) {
+    alert('❌ Nenhuma nova imagem selecionada para salvar.');
+    return;
   }
 
-  // Método simulado de upload de imagem
-  private uploadImage(file: File): Observable<string> {
-    // ESTA É A LÓGICA QUE VOCÊ PRECISA SUBSTITUIR
-    // Exemplo para um backend real:
-    // const formData = new FormData();
-    // formData.append('file', file, file.name);
-    // return this.http.post<string>('url-do-seu-backend-upload', formData);
-    
-    // Simulação: Apenas retorna uma URL de placeholder
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next('https://via.placeholder.com/100/6002EE/FFFFFF?text=Nova+Foto');
-        observer.complete();
-      }, 1000);
-    });
-  }
+  // Use o método do serviço que já faz o upload e a atualização do perfil
+  const formData = new FormData();
+  // CORREÇÃO: Altere selectedFile para selectedImageFile
+  formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
+
+  // O Orval gerou um tipo UpdateProfileImageBody para o FormData, use-o
+  // O tipo do 'image' é 'MultipartFile' no backend, que corresponde a um 'File' ou 'Blob' no frontend
+  const body: UpdateProfileImageBody = {
+    // CORREÇÃO: Altere selectedFile para selectedImageFile
+    image: this.selectedImageFile // Ou o formData, dependendo de como o Orval gerou o tipo
+  };
+  
+  // Altere a chamada para o método correto que lida com o upload
+  this.authService.updateProfile(formData as any).subscribe({ 
+    next: () => {
+      alert('✅ Foto de perfil atualizada com sucesso!');
+      // CORREÇÃO: Altere selectedFile para selectedImageFile
+      this.selectedImageFile = null;
+      // Opcional: Recarregar os dados do usuário para obter a nova URL
+      // this.authService.getCurrentStudent().subscribe(user => {
+      //   this.usuarioLogado = user;
+      // });
+    },
+    error: (err: HttpErrorResponse) => {
+      alert('❌ Erro ao atualizar a foto de perfil.');
+      console.error('Erro ao atualizar foto:', err);
+    },
+  });
+}
 
 
 

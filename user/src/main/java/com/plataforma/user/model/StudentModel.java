@@ -2,11 +2,13 @@ package com.plataforma.user.model;
 
 import java.io.Serial;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -107,6 +109,10 @@ public class StudentModel implements  UserDetails {
     // tema do usuário 
     @Column(name = "user_theme", length = 50)
     private String userTheme;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     // Métodos obrigatórios do UserDetails
     @ManyToMany(fetch = FetchType.EAGER)
