@@ -7,7 +7,7 @@ import { DashboardHeader } from '../../shared/components/dashboard-header/dashbo
 import { FooterComponent } from '../../shared/components/footer/footer';
 import { StudentModel } from '../../api/generated/model/studentModel';
 // Corrigido: o caminho de importação e os tipos corretos
-import { PaymentRequestDTO, PaymentSuccessResponse } from '../../api/generated/payment/modelp';
+import { PaymentRequestDTO, PaymentSuccessResponse } from '../../api/generated/payment/model1';
 import { OpenAPIDefinitionService } from '../../api/generated/payment/payment-api'; 
 import { AuthService } from '../../core/services/auth-service/auth-service';
 

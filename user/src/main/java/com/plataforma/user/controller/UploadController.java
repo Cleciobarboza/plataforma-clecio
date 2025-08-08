@@ -5,21 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.plataforma.user.service.StudentService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,16 +25,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/upload")
 @Tag(name = "Upload", description = "Endpoints para upload de arquivos")
 public class UploadController {
-      
-    private final StudentService studentService;
-
-    // Construtor para injeção de dependência
-    public UploadController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     private static final String UPLOAD_DIR = "uploads/";
-    
+
+  
 
     @Operation(
         summary = "Faz o upload de uma imagem",
@@ -52,7 +40,7 @@ public class UploadController {
             @ApiResponse(responseCode = "500", description = "Erro ao salvar a imagem")
         }
     )
-    @PostMapping("/image")
+    @PostMapping("/upload/image")
     public ResponseEntity<String> uploadImage(
         @Parameter(description = "Arquivo de imagem", required = true)
         @RequestParam("file") MultipartFile file) {
@@ -69,7 +57,6 @@ public class UploadController {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
             String imageUrl = "http://localhost:8080/" + UPLOAD_DIR + filename;
-
             return ResponseEntity.ok(imageUrl);
 
         } catch (IOException e) {
@@ -78,7 +65,6 @@ public class UploadController {
         }
     }
 
-    // CORREÇÃO: Adicione a documentação do Swagger para este endpoint
     @Operation(
         summary = "Atualiza a imagem de perfil do usuário logado",
         description = "Recebe uma imagem multipart e a salva como foto de perfil para o usuário autenticado.",
@@ -89,18 +75,24 @@ public class UploadController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
         }
     )
-    @PutMapping("/me/image")
-    public ResponseEntity<Void> updateProfileImage(
-        @Parameter(description = "Arquivo de imagem", required = true)
-        @RequestParam("image") MultipartFile image,
-        @AuthenticationPrincipal UserDetails userDetails) {
-        
-        if (image.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        UUID userId = UUID.fromString(userDetails.getUsername());
-        studentService.saveProfileImage(userId, image);
-        return ResponseEntity.noContent().build();
+   @PostMapping("/image")
+    public ResponseEntity<Map<String, String>> uploadProfileImage(@RequestParam("image") MultipartFile image) {
+    if (image.isEmpty()) {
+        return ResponseEntity.badRequest().build();
     }
+
+    String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+    Path path = Paths.get("uploads/" + filename);
+
+    try {
+        Files.write(path, image.getBytes());
+    } catch (IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    // Retorne apenas a URL pública da imagem
+    String imageUrl = "https://meuservidor.com/uploads/" + filename;
+    return ResponseEntity.ok(Map.of("imageUrl", imageUrl));
+}
+
 }

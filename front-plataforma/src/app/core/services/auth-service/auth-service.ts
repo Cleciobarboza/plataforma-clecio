@@ -200,6 +200,18 @@ updateStudentPreferences(studentPreferenceUpdateDTO: StudentPreferenceUpdateDTO)
       this.studentSubject.next(currentStudent); // Notifica os componentes sobre a mudança
     }
   }
+  uploadUserImage(formData: FormData): Observable<void> {
+  return this.http.put<void>(
+    '/upload/me/image',
+    formData,
+    {
+      headers: this.getAuthHeaders() // Não inclua 'Content-Type', o Angular cuida disso
+    }
+  );
+}
+
+
+
   
 }
 

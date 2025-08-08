@@ -26,7 +26,7 @@ import {
 import type {
   PaymentRequestDTO,
   PaymentSuccessResponse
-} from './model1';
+} from './model';
 
 type HttpClientOptions = {
   headers?: HttpHeaders | {

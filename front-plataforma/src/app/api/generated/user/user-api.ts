@@ -36,8 +36,9 @@ import type {
   StudentProfileUpdateDTO,
   StudentRegisterDTO,
   StudentStatusDTO,
-  UpdateProfileImageBody,
-  UploadImageBody
+  UploadImageBody,
+  UploadProfileImage204,
+  UploadProfileImageBody
 } from './model';
 
 type HttpClientOptions = {
@@ -61,27 +62,6 @@ export class AuthService {
   constructor(
     private http: HttpClient,
   ) {}/**
- * Recebe uma imagem multipart e a salva como foto de perfil para o usuário autenticado.
- * @summary Atualiza a imagem de perfil do usuário logado
- */
- updateProfileImage<TData = void>(
-    updateProfileImageBody: UpdateProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
-  ): Observable<TData>;
-    updateProfileImage<TData = void>(
-    updateProfileImageBody: UpdateProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
-  ): Observable<AngularHttpResponse<TData>>;
-    updateProfileImage<TData = void>(
-    updateProfileImageBody: UpdateProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;updateProfileImage<TData = void>(
-    updateProfileImageBody: UpdateProfileImageBody, options?: HttpClientOptions
-  ): Observable<TData>  {
-    return this.http.put<TData>(
-      `http://localhost:8080/upload/me/image`,
-      updateProfileImageBody,options
-    );
-  }
-
-/**
  * Atualiza os dados do perfil de um aluno existente
  * @summary Atualizar perfil do aluno
  */
@@ -168,8 +148,29 @@ export class AuthService {
     uploadImageBody: UploadImageBody, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
-      `http://localhost:8080/upload/image`,
+      `http://localhost:8080/upload/upload/image`,
       uploadImageBody,options
+    );
+  }
+
+/**
+ * Recebe uma imagem multipart e a salva como foto de perfil para o usuário autenticado.
+ * @summary Atualiza a imagem de perfil do usuário logado
+ */
+ uploadProfileImage<TData = UploadProfileImage204>(
+    uploadProfileImageBody: UploadProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    uploadProfileImage<TData = UploadProfileImage204>(
+    uploadProfileImageBody: UploadProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    uploadProfileImage<TData = UploadProfileImage204>(
+    uploadProfileImageBody: UploadProfileImageBody, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;uploadProfileImage<TData = UploadProfileImage204>(
+    uploadProfileImageBody: UploadProfileImageBody, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.post<TData>(
+      `http://localhost:8080/upload/image`,
+      uploadProfileImageBody,options
     );
   }
 
@@ -387,11 +388,11 @@ export class AuthService {
 
 };
 
-export type UpdateProfileImageClientResult = NonNullable<void>
 export type UpdateProfileClientResult = NonNullable<void>
 export type UpdateStatusClientResult = NonNullable<void>
 export type UpdatePreferencesClientResult = NonNullable<void>
 export type UploadImageClientResult = NonNullable<string>
+export type UploadProfileImageClientResult = NonNullable<UploadProfileImage204>
 export type GetAllRolesClientResult = NonNullable<RoleModel[]>
 export type CreateRoleClientResult = NonNullable<RoleModel>
 export type RegisterClientResult = NonNullable<StudentModel>

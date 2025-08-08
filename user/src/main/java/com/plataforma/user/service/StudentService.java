@@ -222,6 +222,18 @@ public void updatePreferences(UUID userId, StudentPreferenceUpdateDTO dto) {
         }
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+public void updateStudentPreferences(UUID userId, StudentPreferenceUpdateDTO preferencesDTO) {
+    StudentModel student = studentRepository.findById(userId)
+        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+    student.setUserImageUrl(preferencesDTO.getUserImageUrl());
+    student.setUserTheme(preferencesDTO.getUserTheme());
+    student.setBannerColor(preferencesDTO.getBannerColor());
+
+    studentRepository.save(student);
+}
+
+
 }   
 
 
