@@ -91,11 +91,11 @@ carregarDadosUsuario(): void {
     this.currentBannerImage = bannerMap[banner] || bannerMap['roxo'];
   }
 
-  atualizarPreferenciaBanner(novoTema: string): void {
+  atualizarPreferenciaBanner(bannerColor: string): void {
     if (!this.usuarioLogado) return;
 
     const preferencia: StudentPreferenceUpdateDTO = {
-      userTheme: novoTema
+      bannerColor: bannerColor
     };
 
     this.authService.updateStudentPreferences(preferencia).subscribe({

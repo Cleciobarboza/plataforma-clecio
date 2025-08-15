@@ -16,4 +16,6 @@ public interface StudentRepository extends JpaRepository<StudentModel, UUID> {
     // ✅ Método correto, baseado no nome do campo user_name da entidade
     Optional<StudentModel> findByUserName(String userName);
 
+    //MyAppUser findByEmail(String email);
+
 }

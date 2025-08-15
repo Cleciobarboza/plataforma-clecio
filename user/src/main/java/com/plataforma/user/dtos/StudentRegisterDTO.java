@@ -1,5 +1,6 @@
 package com.plataforma.user.dtos;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,6 +17,13 @@ public class StudentRegisterDTO {
 
     @NotBlank(message = "Password cannot be blank")
     private String password;
+
+    private String verficationToken;
+
+    private boolean isVerified;
+
+    @Column(name = "reset_token")
+    private String resetToken;
 
     
 }

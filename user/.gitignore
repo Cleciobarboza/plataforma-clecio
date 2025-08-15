@@ -30,3 +30,6 @@ target/
 ### Arquivos de configuração local ###
 .env
 application-local.properties
+
+application.yaml
+

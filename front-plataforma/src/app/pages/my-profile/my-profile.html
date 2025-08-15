@@ -1,29 +1,30 @@
-
-
 <div class="min-h-screen bg-gray-100 dark:bg-[#05081d] text-black dark:text-white">
 
-<div class="w-full h-40 md:h-56 overflow-hidden mb-8">
+  <!-- Banner -->
+  <div class="w-full h-40 md:h-56 overflow-hidden mb-8">
     <img [src]="currentBannerImage" alt="Banner do Perfil" class="w-full h-full object-cover" />
   </div>
 
+  <!-- Foto de perfil -->
+  <div class="flex flex-col items-center gap-3">
+    <div class="relative w-24 h-24 group">
 
- <div class="flex flex-col items-center gap-3">
-  <div class="relative w-24 h-24 group">
-    <img
-  *ngIf="userImageUrl; else placeholder"
-  [src]="userImageUrl"
-  alt="Foto de perfil"
-  class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300" />
+      <!-- Foto de perfil -->
+      <img
+        *ngIf="userImageUrl; else placeholder"
+        [src]="userImageUrl"
+        alt="Foto de perfil"
+        class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300"
+      />
 
-<ng-template #placeholder>
-  <img
-    src="https://via.placeholder.com/100"
-    alt="Foto padrão"
-    class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300" />
-</ng-template>
-
-      
-    
+      <!-- Imagem padrão -->
+      <ng-template #placeholder>
+        <img
+          src="https://via.placeholder.com/100"
+          alt="Foto padrão"
+          class="w-full h-full object-cover rounded-full border-2 border-gray-800 shadow dark:bg-gray-300"
+        />
+      </ng-template>
 
     <!-- Ícone de câmera no hover -->
     <div

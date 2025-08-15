@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import com.plataforma.user.config.jwt.LoginResponse;
 import com.plataforma.user.dtos.StudentBasicInfoDTO;
 import com.plataforma.user.dtos.StudentLoginDTO;
@@ -24,6 +26,7 @@ import com.plataforma.user.dtos.StudentProfileUpdateDTO;
 import com.plataforma.user.dtos.StudentRegisterDTO;
 import com.plataforma.user.dtos.StudentStatusDTO;
 import com.plataforma.user.model.StudentModel;
+
 import com.plataforma.user.service.StudentService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +46,16 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "Auth Controller", description = "Endpoints for student authentication and management")
 public class StudentController {
 
+  //  @Autowired
+  //  private PasswordEncoder passwordEncoder;
+
+  //  @Autowired
+ //   private EmailService emailService;
+
     private final StudentService studentService;
+
+
+
 
     @Operation(summary = "Login do aluno", description = "Realiza login e retorna token JWT")
     @ApiResponse(responseCode = "200", description = "Login realizado com sucesso",
@@ -61,6 +73,37 @@ public class StudentController {
     public ResponseEntity<StudentModel> register(@RequestBody @Valid StudentRegisterDTO dto) {
         StudentModel saved = studentService.register(dto);
         return ResponseEntity.ok(saved); 
+
+        //novo
+        /* 
+       MyAppUser exitingAppUser = StudentRepository.findByEmail(student.getEmail());
+    
+       if (exitingAppUser != null) {
+            if(exitingAppUser.isVerified()){
+                return new ResponseEntity<>("Este usuário já exite e vereficado",HttpStatus.BAD_REQUEST);
+            }else{
+                String verificationToken = JwtTokenUtil.generateToken(student.getEmail());
+                exitingAppUser.setVerificationToken(verificationToken);
+                StudentRepository.save(exitingAppUser);
+                //Send Email Code
+                emailService.sendVerificationEmail(exitingAppUser.getEmail(), verificationToken);
+                return new ResponseEntity<>("Email de verificação enviado, por favor verifique sua caixa de email",HttpStatus.OK);
+                
+
+            }
+        }
+        student.serPassword(passwordEncoder.encode(student.getPassword()));
+        String verificationToken = JwtTokenUtil.generateToken(student.getEmail());
+      
+        student.setVerificationToken(verificationToken);
+        StudentRepository.save(student);
+        Send Email Code
+        
+
+        return new ResponseEntity<>("Cadastro realizado com sucesso! Verifique seu e-mail.",HttpStatus.OK);
+        
+
+    */
     }
 
     @Operation(summary = "Buscar aluno por ID", description = "Retorna os dados do aluno com o ID informado")
@@ -139,7 +182,7 @@ public class StudentController {
     }
 
     // Atualizar o perfil chamando o serviço
-    studentService.updateProfile(student.getId(), dto);
+     studentService.updateProfile(student.getId(), dto);
 
     return ResponseEntity.noContent().build();
     }
@@ -185,12 +228,8 @@ public class StudentController {
         @PathVariable UUID studentId) {
         StudentBasicInfoDTO basicInfo = studentService.getBasicInfo(studentId);
         return ResponseEntity.ok(basicInfo);
+
+
         }
-
-
-        
     }
    
-
-
-        

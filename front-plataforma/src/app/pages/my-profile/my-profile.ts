@@ -6,7 +6,7 @@ import { FooterComponent } from '../../shared/components/footer/footer';
 import { UsuarioLogadoDTO } from '../../shared/models/usuario-logado.dto';
 import { StudentProfileDTO, StudentProfileUpdateDTO } from '../../api/generated/model';
 import { AuthService } from '../../core/services/auth-service/auth-service';
-import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-my-profile',
@@ -120,7 +120,7 @@ export class MyProfile implements OnInit {
 onImageSelected(event: Event): void {
   const file = (event.target as HTMLInputElement)?.files?.[0];
   if (file) {
-    this.selectedImage = file; // <-- ESSA LINHA FALTAVA
+    this.selectedImage = file; 
 
     const reader = new FileReader();
     reader.onload = () => {
